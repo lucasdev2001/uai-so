@@ -44,4 +44,14 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+router.delete("/:id",async(req,res)=>{
+  const { id } = req.params;
+  try {
+    const query = await Cliente.findByIdAndDelete(id);
+    res.status(200).send(query);
+  } catch (error) {
+    res.status(500).send({ message: error });
+  }
+})
+
 export default router;
