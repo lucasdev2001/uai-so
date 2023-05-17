@@ -1,7 +1,5 @@
 import { Schema, model } from "mongoose";
 import { randomBytes } from "crypto";
-import mongooseAutoPopulate from "mongoose-autopopulate";
-
 const reservaSchema = new Schema({
   data: Date,
   estado: {
@@ -13,7 +11,7 @@ const reservaSchema = new Schema({
     type: String,
     enum: ["Mesa", "Pedido"],
   },
-  cliente: { type: Schema.Types.ObjectId, ref: "Cliente", autopopulate: true },
+  cliente: { type: Schema.Types.ObjectId, ref: "Cliente" },
   senha: {
     type: String,
     default: () => randomBytes(4).toString("hex"),
@@ -24,8 +22,4 @@ const reservaSchema = new Schema({
   },
 });
 
-reservaSchema.plugin(mongooseAutoPopulate);
-
-const Reserva = model("Reserva", reservaSchema);
-
-export default Reserva;
+export default model("Reserva", reservaSchema);

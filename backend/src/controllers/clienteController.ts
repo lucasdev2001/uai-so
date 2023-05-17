@@ -4,54 +4,40 @@ import Cliente from "../models/Cliente";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  try {
-    const clientes = await Cliente.find({});
-
-    res.status(200).send(clientes);
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
+  Cliente.find()
+    .populate("reservas", {
+      cliente: false,
+    })
+    .then(clientes => res.status(200).send(clientes))
+    .catch(err => res.status(500).send(err));
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", (req, res) => {
   const { id } = req.params;
-  try {
-    const cliente = await Cliente.findById(id).populate("reservas");
-    res.status(200).send(cliente);
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
+  Cliente.findById(id)
+    .then(cliente => res.status(200).send(cliente))
+    .catch(err => res.status(500).send(err));
 });
 
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   const { nome, email, senha } = req.body;
-
-  try {
-    const query = await new Cliente({ nome, email, senha }).save();
-    res.status(201).send(query);
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
+  new Cliente({ nome, email, senha })
+    .save()
+    .then(cliente => res.status(201).send(cliente));
 });
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  try {
-    const query = await Cliente.findByIdAndUpdate(id, req.body);
-    res.status(201).send(query);
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
+  Cliente.findByIdAndUpdate(id, req.body)
+    .then(cliente => res.status(201).send(cliente))
+    .catch(err => res.status(500).send(err));
 });
 
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id", async (req, res) => {
   const { id } = req.params;
-  try {
-    const query = await Cliente.findByIdAndDelete(id);
-    res.status(200).send(query);
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
-})
+  Cliente.findByIdAndDelete(id)
+    .then(cliente => res.status(200).send(cliente))
+    .catch(err => res.status(500).send(err));
+});
 
 export default router;
