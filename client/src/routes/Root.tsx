@@ -1,6 +1,15 @@
+import axios from "axios";
 import Avatar from "boring-avatars";
+import { Link } from "react-router-dom";
 function Root() {
   const userName = "Pedro Belle";
+
+  const handleSetCookie = async () => {
+    const response = await axios.get("http://localhost:3000/test", {
+      withCredentials: true,
+    });
+    console.log(response);
+  };
 
   return (
     <>
@@ -18,10 +27,10 @@ function Root() {
               </summary>
               <ul role="listbox">
                 <li>
-                  <a href="#">login</a>
+                  <Link to={"/login"}>login</Link>
                 </li>
                 <li>
-                  <a href="#">cadastro</a>
+                  <Link to={"/cadastro"}>cadastro</Link>
                 </li>
               </ul>
             </details>
@@ -41,6 +50,7 @@ function Root() {
       <section className="container">
         <button>reservar mesa</button>
         <button>reservar pedido</button>
+        <button onClick={handleSetCookie}>set cookie</button>
       </section>
       <section className="container"></section>
     </>

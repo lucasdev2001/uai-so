@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Login() {
-  const [telefone, setTelefone] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
   async function handleSubmit(e: any) {
@@ -11,7 +11,7 @@ function Login() {
     try {
       const response = await axios.post(
         "http://localhost:3000/clientes/login",
-        { telefone, senha }
+        { email, senha }
       );
       console.log(response);
     } catch (error) {
@@ -26,7 +26,7 @@ function Login() {
           <input
             type="text"
             placeholder="telefone"
-            onChange={(e) => setTelefone(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <input
@@ -35,7 +35,9 @@ function Login() {
             onChange={(e) => setSenha(e.target.value)}
             required
           />
-          <button type="submit">entrar</button>
+          <Link to={"/"}>
+            <button type="submit">entrar</button>
+          </Link>
         </form>
         <Link to={"/cadastro"}>ainda não pussí conta ?</Link>
       </section>

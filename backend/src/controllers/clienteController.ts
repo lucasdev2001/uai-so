@@ -4,40 +4,53 @@ import Cliente from "../models/Cliente";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  Cliente.find()
-    .populate("reservas", {
+  try {
+    const clientes = await Cliente.find().populate("reservas", {
       cliente: false,
-    })
-    .then(clientes => res.status(200).send(clientes))
-    .catch(err => res.status(500).send(err));
+    });
+
+    res.status(200).send(clientes);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  Cliente.findById(id)
-    .then(cliente => res.status(200).send(cliente))
-    .catch(err => res.status(500).send(err));
+  try {
+    const cliente = await Cliente.findById(id);
+    res.status(200).send(cliente);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const { nome, email, senha } = req.body;
-  new Cliente({ nome, email, senha })
-    .save()
-    .then(cliente => res.status(201).send(cliente));
+  try {
+    const cliente = new Cliente({ nome, email, senha });
+    await cliente.save();
+    res.status(201).send(cliente);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  Cliente.findByIdAndUpdate(id, req.body)
-    .then(cliente => res.status(201).send(cliente))
-    .catch(err => res.status(500).send(err));
+  try {
+    const cliente = await Cliente.findByIdAndUpdate(id, req.body);
+    res.status(201).send(cliente);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   Cliente.findByIdAndDelete(id)
-    .then(cliente => res.status(200).send(cliente))
-    .catch(err => res.status(500).send(err));
+    .then((cliente) => res.status(200).send(cliente))
+    .catch((err) => res.status(500).send(err));
 });
 
 export default router;
