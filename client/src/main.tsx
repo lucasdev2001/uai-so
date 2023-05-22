@@ -1,23 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./routes/Login";
-import Cadastro from "./routes/Cadastro";
-import Root from "./routes/Root";
+import Login from "./routes/funcionarios/Login";
+import Dashboard from "./routes/funcionarios/Dashboard";
+import ClienteHomePage from "./routes/clientes/ClienteHomePage";
+import Index from "./routes/funcionarios/Index";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/">
-      <Route index element={<Root />} />
-      <Route path="login" element={<Login />} />
-      <Route path="cadastro" element={<Cadastro />} />
+      {/* funcionários */}
+      <Route path="funcionarios">
+        <Route element={<Dashboard />}>
+          <Route path="contatos" element={<>Hello conato</>} />
+          <Route index element={<Index />} />
+        </Route>
+        <Route path="login" element={<Login />} />
+      </Route>
+      {/* clientes */}
+      <Route path="clientes">
+        <Route index element={<ClienteHomePage />} />
+      </Route>
     </Route>
   )
 );
@@ -26,4 +35,4 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
-);  
+);

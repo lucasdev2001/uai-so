@@ -10,20 +10,16 @@ import funcionarioController from "./controllers/funcionarioController";
 import mensagemController from "./controllers/mensagemController";
 import testController from "./controllers/testController";
 
-const app = express();
-const port = process.env.PORT;
+//env variables
+const { PORT, MONGO_URI } = process.env;
 
-mongoose.connect(process.env.MONGODB_URI).catch((error) => console.log(error));
+const app = express();
+
+mongoose.connect(MONGO_URI).catch(error => console.log(error));
 
 //middleweres
 app.use(express.json());
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    methods: "*",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 //rotas
 app.use("/clientes", clienteController);
@@ -32,6 +28,6 @@ app.use("/funcionarios", funcionarioController);
 app.use("/mensagens", mensagemController);
 app.use("/test", testController);
 
-app.listen(port, () => {
-  console.log(`izza alive 🧟‍♂️ ⚡ ${port}`);
+app.listen(PORT, () => {
+  console.log(`izza alive 🧟‍♂️ ⚡ ${PORT}`);
 });

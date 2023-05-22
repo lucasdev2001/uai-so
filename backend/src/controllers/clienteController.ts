@@ -5,10 +5,7 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const clientes = await Cliente.find().populate("reservas", {
-      cliente: false,
-    });
-
+    const clientes = await Cliente.find().populate("reservas");
     res.status(200).send(clientes);
   } catch (error) {
     res.status(500).send(error);
@@ -49,8 +46,8 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   Cliente.findByIdAndDelete(id)
-    .then((cliente) => res.status(200).send(cliente))
-    .catch((err) => res.status(500).send(err));
+    .then(cliente => res.status(200).send(cliente))
+    .catch(err => res.status(500).send(err));
 });
 
 export default router;

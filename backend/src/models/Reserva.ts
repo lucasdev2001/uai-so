@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { randomBytes } from "crypto";
+import Cliente from "./Cliente";
 const reservaSchema = new Schema({
   data: Date,
   estado: {
@@ -16,10 +17,14 @@ const reservaSchema = new Schema({
     type: String,
     default: () => randomBytes(4).toString("hex"),
   },
-  mesa: {
-    numeroMesa: Number,
-    qtdPessoas: Number,
-  },
+  qtdPessoas: Number,
+});
+
+reservaSchema.pre("save", async function () {
+  Cliente.findById(this.cliente).then(cliente => {
+    cliente.reservas.push(this._id);
+    cliente.save();
+  });
 });
 
 export default model("Reserva", reservaSchema);

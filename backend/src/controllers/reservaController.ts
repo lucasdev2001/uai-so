@@ -23,12 +23,18 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
-  const { data, tipo, cliente, mesa } = req.body;
-  new Reserva({ data, tipo, cliente, mesa })
-    .save()
-    .then(reserva => res.status(201).send(reserva))
-    .catch(err => res.status(500).send(err));
+router.post("/", async (req, res) => {
+  const { data, horario, tipo, cliente, qtdPessoas } = req.body;
+  console.log(data);
+
+  try {
+    const reserva = new Reserva({ data, horario, tipo, cliente, qtdPessoas });
+    await reserva.save();
+    res.status(201).send(reserva);
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
 });
 
 export default router;
