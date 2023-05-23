@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Cliente from "../models/Cliente";
+import bcrypt from "bcrypt";
 
 const router = Router();
 
@@ -48,6 +49,27 @@ router.delete("/:id", async (req, res) => {
   Cliente.findByIdAndDelete(id)
     .then(cliente => res.status(200).send(cliente))
     .catch(err => res.status(500).send(err));
+});
+
+router.post("/login", async (req, res) => {
+  const { email, senha } = req.body;
+  console.log(email);
+
+  try {
+    const cliente = await Cliente.findOne({ email: email });
+    const auth = await bcrypt.compare(senha, cliente.senha);
+    if (auth) {
+      res.send({
+        _id: cliente._id,
+        nome: cliente.nome,
+        email: cliente.email,
+      });
+    } else {
+      res.status(400).send("senha invalida");
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 export default router;
