@@ -1,96 +1,65 @@
-import axios from "axios";
-import { useState } from "react";
-import FormReserva from "./components/FormReserva";
+import Avatar from "boring-avatars";
+import { useEffect, useState } from "react";
+import { ICliente } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 export default () => {
-  const [cliente, setCliente] = useState({
-    _id: "646b5bd72d5b4a9f61e64ea6",
+  const navigator = useNavigate();
+  useEffect(() => {
+    const clienteLocalStorage = localStorage.getItem("cliente");
+    if (clienteLocalStorage) {
+      setCliente(JSON.parse(clienteLocalStorage));
+      console.log(cliente);
+    } else {
+      navigator("/clientes/login");
+    }
+  }, []);
+  const [cliente, setCliente] = useState<ICliente>({
+    _id: "",
     nome: "",
     email: "",
   });
-
-  const [inputs, setInputs] = useState({
-    qtdPessoas: "1",
-    data: "",
-  });
-
-  interface IReserva {
-    data: Date;
-    _id: String;
-    estado: String;
-    tipo: String;
-    cliente: String;
-    qtdPessoas: String;
-    senha: String;
-  }
-
-  const [reserva, setReserva] = useState<null | IReserva>(null);
-
-  const handleInputChange = (e: any) => {
-    const target = e.target;
-    const { value, name } = target;
-
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-    console.log(inputs.qtdPessoas);
-
-    if (name === "qtdPessoas") {
-      const rangeOutPut = document.getElementById("qtd-pessoas-output");
-      if (rangeOutPut) rangeOutPut.innerText = value;
-    }
-  };
-
-  const handleFormSubmit = (e: any) => {
-    e.preventDefault();
-    console.log(inputs);
-
-    axios
-      .post("http://localhost:3001/reservas", {
-        data: inputs.data,
-        qtdPessoas: inputs.qtdPessoas,
-        tipo: "Mesa",
-        cliente: cliente._id,
-      })
-      .then(res => setReserva(res.data))
-      .catch(err => console.log(err));
-  };
-
-  const Sucesso = (props: { reserva: IReserva }) => {
-    const data = new Date(props.reserva.data);
-    return (
-      <>
-        <h1>
-          <ins>Reserva:</ins>
-        </h1>
-        <article>
-          <header>{props.reserva.tipo}</header>
-          <input type="text" readOnly value={`senha: ${props.reserva.senha}`} />
-          <input
-            className="text-center"
-            type="text"
-            readOnly
-            value={`${data.toLocaleDateString()} ás ${data.toLocaleTimeString()}`}
-          />
-          <input type="text" readOnly value={`${props.reserva.estado}`} />
-        </article>
-      </>
-    );
-  };
-
   return (
     <>
-      <br />
+      <nav className="container">
+        <ul>
+          <li>
+            <strong>Uai Sô 🤠</strong>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <a href="#">Cardápio</a>
+          </li>
+          <li>
+            <details role="list" dir="rtl">
+              <summary aria-haspopup="listbox" role="link">
+                Menu
+              </summary>
+              <ul role="listbox">
+                <li>
+                  <a>Minhas reservas</a>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
       <section className="container">
-        {reserva === null ? (
-          <FormReserva
-            onChange={handleInputChange}
-            onSubmit={handleFormSubmit}
+        <center>
+          <hgroup>
+            <h2>{cliente.nome}</h2>
+            <h3>Bem vindo</h3>
+          </hgroup>
+          <Avatar
+            size={220}
+            name={`${cliente._id}`}
+            variant="beam"
+            colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
           />
-        ) : (
-          <Sucesso reserva={reserva} />
-        )}
+        </center>
+        <br />
+        <button>fazer reserva</button>
       </section>
     </>
   );

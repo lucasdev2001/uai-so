@@ -11,6 +11,8 @@ import Login from "./routes/funcionarios/Login";
 import Dashboard from "./routes/funcionarios/Dashboard";
 import ClienteHomePage from "./routes/clientes/ClienteHomePage";
 import Index from "./routes/funcionarios/Index";
+import ClienteLogin from "./routes/clientes/ClienteLogin";
+import ClienteReserva from "./routes/clientes/ClienteReserva";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +28,8 @@ const router = createBrowserRouter(
       {/* clientes */}
       <Route path="clientes">
         <Route index element={<ClienteHomePage />} />
+        <Route path="login" element={<ClienteLogin />} />
+        <Route path="reserva" element={<ClienteReserva />} />
       </Route>
     </Route>
   )
