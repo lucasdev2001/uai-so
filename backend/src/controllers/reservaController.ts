@@ -23,6 +23,16 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/cliente/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const reservas = await Reserva.find({ cliente: id });
+    res.status(200).send(reservas);
+  } catch (error) {
+    res.status(404).send({ message: error });
+  }
+});
+
 router.post("/", async (req, res) => {
   const { data, horario, tipo, cliente, qtdPessoas } = req.body;
   console.log(data);

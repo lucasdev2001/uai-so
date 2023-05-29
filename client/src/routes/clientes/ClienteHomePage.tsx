@@ -1,40 +1,27 @@
-import Avatar from "boring-avatars";
 import { useEffect, useState } from "react";
 import { ICliente } from "../../types";
-import { useNavigate } from "react-router-dom";
 
 export default () => {
-  const navigator = useNavigate();
   useEffect(() => {
-    const clienteLocalStorage = localStorage.getItem("cliente");
+    const clienteLocalStorage = localStorage.getItem("cliente") ?? null;
     if (clienteLocalStorage) {
       setCliente(JSON.parse(clienteLocalStorage));
-      console.log(cliente);
-    } else {
-      navigator("/clientes/login");
     }
   }, []);
-  const [cliente, setCliente] = useState<ICliente>({
-    _id: "",
-    nome: "",
-    email: "",
-  });
+  const [cliente, setCliente] = useState<ICliente | null>(null);
+  console.log(cliente);
+
   return (
     <>
       <nav className="container">
         <ul>
-          <li>
-            <strong>Uai Sô 🤠</strong>
-          </li>
+          <li>Bem Vindo</li>
         </ul>
         <ul>
           <li>
-            <a href="#">Cardápio</a>
-          </li>
-          <li>
             <details role="list" dir="rtl">
               <summary aria-haspopup="listbox" role="link">
-                Menu
+                Lucas
               </summary>
               <ul role="listbox">
                 <li>
@@ -45,21 +32,26 @@ export default () => {
           </li>
         </ul>
       </nav>
+      <header className="container">
+        <img src="./images/header-image.png" className="rounded-5" />
+      </header>
+      <br />
       <section className="container">
-        <center>
-          <hgroup>
-            <h2>{cliente.nome}</h2>
-            <h3>Bem vindo</h3>
-          </hgroup>
-          <Avatar
-            size={220}
-            name={`${cliente._id}`}
-            variant="beam"
-            colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
-          />
-        </center>
-        <br />
-        <button>fazer reserva</button>
+        <input
+          type="search"
+          id="search"
+          name="search"
+          placeholder="pesquisar"
+        />
+      </section>
+      <section className="container">
+        <div className="text-center">
+          <div className="row">
+            <div className="col rounded-pill p-2 m-1">massas</div>
+            <div className="col rounded-pill p-2 m-1 shadow-sm">carnes</div>
+            <div className="col rounded-pill p-2 m-1 shadow-sm">risoto</div>
+          </div>
+        </div>
       </section>
     </>
   );

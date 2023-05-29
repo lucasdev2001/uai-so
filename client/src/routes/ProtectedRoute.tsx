@@ -1,7 +1,12 @@
-export default () => {
-  return (
-    <>
-      <h1>Lorem ipsum sit amet dolor</h1>
-    </>
-  );
+import { Navigate } from "react-router-dom";
+
+export default (props: { children: any; redirectPath: string }) => {
+  const clienteLocalStorage = localStorage.getItem("cliente");
+  console.log(clienteLocalStorage);
+
+  if (clienteLocalStorage) {
+    return props.children;
+  } else {
+    return <Navigate to={props.redirectPath} />;
+  }
 };

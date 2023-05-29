@@ -8,6 +8,8 @@ export default () => {
     email: "",
   });
   const [funcionarios, setFuncionarios] = useState([funcionario]);
+  console.log(funcionarios);
+
   useEffect(() => {
     setFuncionario(JSON.parse(sessionStorage.getItem("funcionario") ?? ""));
   }, []);

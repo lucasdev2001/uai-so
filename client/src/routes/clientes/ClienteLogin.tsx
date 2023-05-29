@@ -15,13 +15,19 @@ export default () => {
       })
       .then(res => {
         localStorage.setItem("cliente", JSON.stringify(res.data));
-        navigate("/clientes");
+        navigate("/cliente");
       })
       .catch(err => console.log(err));
   };
   return (
     <>
-      <br />
+      <header className="container text-center">
+        <img
+          src="/images/logo.svg"
+          className="img-fluid mb-3 mt-3"
+          width={350}
+        />
+      </header>
       <section className="container">
         <form onSubmit={handleLogin}>
           <input
@@ -32,13 +38,19 @@ export default () => {
           />
           <input
             type="password"
-            placeholder="password"
+            placeholder="senha"
             required
             onChange={e => setSenha(e.target.value)}
           />
           <button type="submit">login</button>
+          <a href="#">Ainda não possuí conta ?</a>
         </form>
       </section>
+      <footer className="text-center position-absolute bottom-0 w-100 container p-3">
+        <small>
+          <a href="#">Faz parte da equipe ?</a>
+        </small>
+      </footer>
     </>
   );
 };

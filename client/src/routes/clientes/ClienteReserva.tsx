@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormReserva from "./components/FormReserva";
 import { IReserva, ICliente } from "../../types";
+import ReservaCard from "./components/ReservaCard";
 export default () => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -58,23 +59,13 @@ export default () => {
   };
 
   const Sucesso = (props: { reserva: IReserva }) => {
-    const data = new Date(props.reserva.data);
     return (
       <>
-        <h1>
-          <ins>Reserva:</ins>
-        </h1>
-        <article>
-          <header>{props.reserva.tipo}</header>
-          <input type="text" readOnly value={`senha: ${props.reserva.senha}`} />
-          <input
-            className="text-center"
-            type="text"
-            readOnly
-            value={`${data.toLocaleDateString()} ás ${data.toLocaleTimeString()}`}
-          />
-          <input type="text" readOnly value={`${props.reserva.estado}`} />
-        </article>
+        <hgroup>
+          <h2>sua reserva foi solicitada!</h2>
+          <h3>aguardando aprovação</h3>
+        </hgroup>
+        <ReservaCard reserva={props.reserva} />
       </>
     );
   };

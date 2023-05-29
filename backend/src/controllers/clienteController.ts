@@ -53,10 +53,11 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, senha } = req.body;
-  console.log(email);
 
   try {
     const cliente = await Cliente.findOne({ email: email });
+    console.log(cliente);
+
     const auth = await bcrypt.compare(senha, cliente.senha);
     if (auth) {
       res.send({
@@ -68,6 +69,8 @@ router.post("/login", async (req, res) => {
       res.status(400).send("senha invalida");
     }
   } catch (error) {
+    console.log(error);
+
     res.status(500).send(error);
   }
 });
