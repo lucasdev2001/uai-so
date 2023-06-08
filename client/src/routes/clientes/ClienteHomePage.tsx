@@ -15,13 +15,22 @@ export default () => {
     <>
       <nav className="container">
         <ul>
-          <li>Bem Vindo</li>
+          <li>
+            <a href="#">
+              <i className="bi bi-cart"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i className="bi bi-bell"></i>
+            </a>
+          </li>
         </ul>
         <ul>
           <li>
             <details role="list" dir="rtl">
               <summary aria-haspopup="listbox" role="link">
-                Lucas
+                perfil
               </summary>
               <ul role="listbox">
                 <li>
@@ -32,10 +41,6 @@ export default () => {
           </li>
         </ul>
       </nav>
-      <header className="container">
-        <img src="./images/header-image.png" className="rounded-5" />
-      </header>
-      <br />
       <section className="container">
         <input
           type="search"
@@ -44,15 +49,119 @@ export default () => {
           placeholder="pesquisar"
         />
       </section>
+      <header className="container">
+        <hgroup>
+          <h1>Bem vindo Lucas</h1>
+          <h2>Escolha um prato e agende sua reserva!</h2>
+        </hgroup>
+      </header>
+      <br />
+
       <section className="container">
         <div className="text-center">
           <div className="row">
-            <div className="col rounded-pill p-2 m-1">massas</div>
-            <div className="col rounded-pill p-2 m-1 shadow-sm">carnes</div>
-            <div className="col rounded-pill p-2 m-1 shadow-sm">risoto</div>
+            <div className="col">
+              <button className="rounded-pill outline">Massas</button>
+            </div>
+            <div className="col">
+              <button className="rounded-pill outline">Carnes</button>
+            </div>
+            <div className="col">
+              <button className="rounded-pill outline">Risotos</button>
+            </div>
           </div>
         </div>
       </section>
+      <section className="container">
+        <div className="row">
+          <div className="col d-flex">
+            <img
+              src="https://images.pexels.com/photos/14701529/pexels-photo-14701529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              className=" rounded-3 flex-fill img-fluid"
+            />
+          </div>
+          <div className="col">
+            <div>
+              <strong>Lorem ipsum dolor</strong>, sit amet consectetur
+              adipisicing <br />
+              <a href="#" className="text-decoration-none">
+                saber mais...
+              </a>
+            </div>
+            <br />
+            <div>
+              <input type="range" min={0} defaultValue={0} />
+              <a
+                href="#"
+                className="float-end p-3 rounded-4 text-decoration-none"
+              >
+                +
+              </a>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col d-flex">
+            <img
+              src="https://images.pexels.com/photos/14701529/pexels-photo-14701529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              className=" rounded-3 flex-fill img-fluid"
+            />
+          </div>
+          <div className="col">
+            <div>
+              <strong>Lorem ipsum dolor</strong>, sit amet consectetur
+              adipisicing <br />
+              <a href="#" className="text-decoration-none">
+                saber mais...
+              </a>
+            </div>
+            <br />
+            <div>
+              <input type="range" min={0} defaultValue={0} />
+              <a
+                href="#"
+                className="float-end p-3 rounded-4 text-decoration-none"
+              >
+                +
+              </a>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div className="row">
+          <div className="col d-flex">
+            <img
+              src="https://images.pexels.com/photos/14701529/pexels-photo-14701529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              className=" rounded-3 img-fluid"
+            />
+          </div>
+          <div className="col">
+            <div>
+              <strong>Lorem ipsum dolor</strong>, sit amet consectetur
+              adipisicing <br />
+              <a href="#" className="text-decoration-none">
+                saber mais...
+              </a>
+            </div>
+            <br />
+            <div>
+              <input type="range" min={0} defaultValue={0} />
+              <a href="#" className="float-end rounded-4 text-decoration-none">
+                +
+              </a>
+              <a href="#">4</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div className="sticky-bottom contrast container-fluid bg-dark p-1">
+        <hgroup className="p-2">
+          <h4>você selecionou</h4>
+          <h5>2 pratos</h5>
+        </hgroup>
+        <button className="rounded-pill">reservar mesa</button>
+      </div>
     </>
   );
 };
