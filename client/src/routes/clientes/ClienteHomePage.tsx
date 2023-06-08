@@ -16,13 +16,13 @@ export default () => {
       <nav className="container">
         <ul>
           <li>
-            <a href="#">
-              <i className="bi bi-cart"></i>
-            </a>
-          </li>
-          <li>
-            <a href="#">
+            <a
+              href="#"
+              className="notification"
+              style={{ position: "relative" }}
+            >
               <i className="bi bi-bell"></i>
+              <span className="badge">1</span>
             </a>
           </li>
         </ul>
@@ -41,126 +41,149 @@ export default () => {
           </li>
         </ul>
       </nav>
-      <section className="container">
-        <input
-          type="search"
-          id="search"
-          name="search"
-          placeholder="pesquisar"
-        />
-      </section>
+
       <header className="container">
         <hgroup>
-          <h1>Bem vindo Lucas</h1>
-          <h2>Escolha um prato e agende sua reserva!</h2>
+          <h2>Bem vindo {cliente?.nome}</h2>
+          <h3>Escolha até três pratos e agende sua reserva!</h3>
         </hgroup>
       </header>
       <br />
+      <section className="container">
+        <input type="search" placeholder="pesquisar por prato" />
+      </section>
 
       <section className="container">
-        <div className="text-center">
-          <div className="row">
-            <div className="col">
-              <button className="rounded-pill outline">Massas</button>
-            </div>
-            <div className="col">
-              <button className="rounded-pill outline">Carnes</button>
-            </div>
-            <div className="col">
-              <button className="rounded-pill outline">Risotos</button>
-            </div>
-          </div>
+        <div className="filters">
+          <a href="#" role="button" className="outline">
+            Massas
+          </a>
+          <a href="#" role="button" className="outline">
+            Carnes
+          </a>
+          <a href="#" role="button">
+            Risotos
+          </a>
         </div>
       </section>
       <section className="container">
-        <div className="row">
-          <div className="col d-flex">
+        <div style={{ display: "flex", minHeight: 200, overflow: "hidden" }}>
+          <div style={{ width: "50%" }}>
             <img
-              src="https://images.pexels.com/photos/14701529/pexels-photo-14701529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              className=" rounded-3 flex-fill img-fluid"
+              src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              style={{ borderRadius: "20px", padding: 10 }}
             />
           </div>
-          <div className="col">
-            <div>
-              <strong>Lorem ipsum dolor</strong>, sit amet consectetur
-              adipisicing <br />
-              <a href="#" className="text-decoration-none">
-                saber mais...
-              </a>
-            </div>
-            <br />
-            <div>
-              <input type="range" min={0} defaultValue={0} />
-              <a
-                href="#"
-                className="float-end p-3 rounded-4 text-decoration-none"
-              >
-                +
-              </a>
-            </div>
+          <div style={{ width: "50%" }}>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
+              minus, in amet atque qui tenetur vel deleniti? Mollitia, pariatur
+            </p>
+            <button className="outline">Lagosta</button>
+          </div>
+        </div>
+
+        <br />
+        <div style={{ display: "flex", minHeight: 200 }}>
+          <div style={{ width: "50%" }}>
+            <img
+              src="https://images.pexels.com/photos/15793934/pexels-photo-15793934/free-photo-of-animal-bicho-construcao-predio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              style={{ borderRadius: "20px", padding: 10 }}
+            />
+          </div>
+          <div
+            style={{
+              width: "50%",
+              position: "relative",
+            }}
+          >
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
+              minus, in amet atque qui tenetur vel deleniti? Mollitia, pariatur
+            </p>
+            <button style={{ position: "absolute", bottom: 0 }}>Lagosta</button>
           </div>
         </div>
         <br />
-        <div className="row">
-          <div className="col d-flex">
+        <div
+          style={{
+            display: "flex",
+            minHeight: 200,
+            overflow: "hidden",
+            gap: "10px",
+          }}
+        >
+          <div style={{ width: "50%" }}>
             <img
-              src="https://images.pexels.com/photos/14701529/pexels-photo-14701529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              className=" rounded-3 flex-fill img-fluid"
+              src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              style={{ borderRadius: "20px", padding: 3 }}
             />
           </div>
-          <div className="col">
-            <div>
-              <strong>Lorem ipsum dolor</strong>, sit amet consectetur
-              adipisicing <br />
-              <a href="#" className="text-decoration-none">
-                saber mais...
-              </a>
-            </div>
+          <div style={{ width: "50%" }}>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic</p>
+            <p>serve duas pessoas</p>
+            <p>acompanha porco</p>
             <br />
-            <div>
-              <input type="range" min={0} defaultValue={0} />
-              <a
-                href="#"
-                className="float-end p-3 rounded-4 text-decoration-none"
-              >
-                +
+            <button disabled>Lagosta</button>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <input type="range" />
+              <output>4</output>
+              <a href="" style={{ float: "right" }}>
+                <i className="bi bi-trash" />
               </a>
-            </div>
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col d-flex">
-            <img
-              src="https://images.pexels.com/photos/14701529/pexels-photo-14701529.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              className=" rounded-3 img-fluid"
-            />
-          </div>
-          <div className="col">
-            <div>
-              <strong>Lorem ipsum dolor</strong>, sit amet consectetur
-              adipisicing <br />
-              <a href="#" className="text-decoration-none">
-                saber mais...
-              </a>
-            </div>
-            <br />
-            <div>
-              <input type="range" min={0} defaultValue={0} />
-              <a href="#" className="float-end rounded-4 text-decoration-none">
-                +
-              </a>
-              <a href="#">4</a>
             </div>
           </div>
         </div>
       </section>
-      <div className="sticky-bottom contrast container-fluid bg-dark p-1">
-        <hgroup className="p-2">
-          <h4>você selecionou</h4>
-          <h5>2 pratos</h5>
-        </hgroup>
-        <button className="rounded-pill">reservar mesa</button>
+      <div className="off-canvas">
+        <dialog>
+          <article>
+            <header>
+              <a
+                href="#"
+                style={{
+                  float: "right",
+                }}
+              >
+                <i className="bi bi-arrow-down-circle-fill" />
+              </a>
+              Seu carrinho
+            </header>
+            <div
+              style={{
+                display: "flex",
+                minHeight: 200,
+                overflow: "hidden",
+                gap: "10px",
+              }}
+            >
+              <div style={{ width: "50%" }}>
+                <img
+                  src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  style={{ borderRadius: "20px", padding: 3 }}
+                />
+              </div>
+              <div style={{ width: "50%" }}>
+                <p>
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
+                </p>
+                <p>serve duas pessoas</p>
+                <p>acompanha porco</p>
+                <br />
+                <button>Lagosta</button>
+                <div style={{ display: "flex", gap: "10px" }}>
+                  <input type="range" />
+                  <output>4</output>
+                </div>
+                <a href="" style={{ float: "right" }}>
+                  <i className="bi bi-trash" />
+                </a>
+              </div>
+            </div>
+            <br />
+            <button>Agendar reserva</button>
+          </article>
+        </dialog>
       </div>
     </>
   );

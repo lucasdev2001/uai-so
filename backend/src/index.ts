@@ -28,6 +28,10 @@ app.use("/funcionarios", funcionarioController);
 app.use("/mensagens", mensagemController);
 app.use("/test", testController);
 
+app.get("/", (req, res) => {
+  res.send("Olá server");
+});
+
 app.listen(PORT, () => {
   console.log(`izza alive 🧟‍♂️ ⚡ ${PORT}`);
 });
