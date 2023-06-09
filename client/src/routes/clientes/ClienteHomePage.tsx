@@ -9,7 +9,11 @@ export default () => {
     }
   }, []);
   const [cliente, setCliente] = useState<ICliente | null>(null);
-  console.log(cliente);
+  const [cardapio, setCardapio] = useState([]);
+
+  const mock = [
+    { nome: "Lagosta", descricao: "Uma lagosta muito gostosa", foto: "" },
+  ];
 
   return (
     <>
@@ -56,82 +60,43 @@ export default () => {
       <section className="container">
         <div className="filters">
           <a href="#" role="button" className="outline">
-            Massas
+            Principal
           </a>
           <a href="#" role="button" className="outline">
-            Carnes
+            Lanche
           </a>
+
           <a href="#" role="button">
-            Risotos
+            Sobremesa
           </a>
         </div>
       </section>
       <section className="container">
-        <div style={{ display: "flex", minHeight: 200, overflow: "hidden" }}>
-          <div style={{ width: "50%" }}>
-            <img
-              src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              style={{ borderRadius: "20px", padding: 10 }}
-            />
-          </div>
-          <div style={{ width: "50%" }}>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-              minus, in amet atque qui tenetur vel deleniti? Mollitia, pariatur
-            </p>
-            <button className="outline">Lagosta</button>
-          </div>
-        </div>
-
-        <br />
-        <div style={{ display: "flex", minHeight: 200 }}>
-          <div style={{ width: "50%" }}>
-            <img
-              src="https://images.pexels.com/photos/15793934/pexels-photo-15793934/free-photo-of-animal-bicho-construcao-predio.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              style={{ borderRadius: "20px", padding: 10 }}
-            />
-          </div>
-          <div
-            style={{
-              width: "50%",
-              position: "relative",
-            }}
-          >
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-              minus, in amet atque qui tenetur vel deleniti? Mollitia, pariatur
-            </p>
-            <button style={{ position: "absolute", bottom: 0 }}>Lagosta</button>
-          </div>
-        </div>
-        <br />
         <div
           style={{
             display: "flex",
-            minHeight: 200,
-            overflow: "hidden",
-            gap: "10px",
+            minHeight: 100,
+            gap: 20,
+            padding: 10,
           }}
         >
           <div style={{ width: "50%" }}>
             <img
-              src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              style={{ borderRadius: "20px", padding: 3 }}
+              src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              style={{ borderRadius: "5px" }}
             />
           </div>
-          <div style={{ width: "50%" }}>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic</p>
-            <p>serve duas pessoas</p>
-            <p>acompanha porco</p>
-            <br />
-            <button disabled>Lagosta</button>
-            <div style={{ display: "flex", gap: "10px" }}>
-              <input type="range" />
-              <output>4</output>
-              <a href="" style={{ float: "right" }}>
-                <i className="bi bi-trash" />
-              </a>
-            </div>
+          <div
+            className="food-card-content"
+            style={{
+              width: "50%",
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <button style={{ marginTop: "auto" }}>Lagosta</button>
           </div>
         </div>
       </section>
@@ -174,10 +139,10 @@ export default () => {
                 <div style={{ display: "flex", gap: "10px" }}>
                   <input type="range" />
                   <output>4</output>
+                  <a href="" style={{ float: "right" }}>
+                    <i className="bi bi-trash" />
+                  </a>
                 </div>
-                <a href="" style={{ float: "right" }}>
-                  <i className="bi bi-trash" />
-                </a>
               </div>
             </div>
             <br />
