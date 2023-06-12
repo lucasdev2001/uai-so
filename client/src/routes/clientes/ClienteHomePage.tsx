@@ -3,33 +3,49 @@ import { ICliente, IPrato } from "../../types";
 import FoodCard from "../../components/FoodCard";
 import Navbar from "../../components/Navbar";
 import { io } from "socket.io-client";
+import axios from "axios";
 
 const socket = io("http://localhost:3001/");
 
 export default () => {
-  socket.on("chat message", msg => {
+  socket.on("updatePratos", msg => {
+    axios
+      .get("http://localhost:3001/pratos")
+      .then(response => setPratos(response.data));
     console.log(msg);
   });
+
+  const [cliente, setCliente] = useState<ICliente | null>(null);
+  const [cardapio, setCardapio] = useState([1, 2, 3]);
+  const [carrinho, setCarrinho] = useState([]);
+  const [pratos, setPratos] = useState([]);
+
   useEffect(() => {
     const clienteLocalStorage = localStorage.getItem("cliente") ?? null;
     if (clienteLocalStorage) {
       setCliente(JSON.parse(clienteLocalStorage));
     }
+    axios
+      .get("http://localhost:3001/pratos")
+      .then(response => setPratos(response.data));
   }, []);
-  socket.emit("chat message", "Lucas");
 
-  const [cliente, setCliente] = useState<ICliente | null>(null);
-  const [cardapio, setCardapio] = useState([1, 2, 3]);
-  const [carrinho, setCarrinho] = useState([]);
-
-  const handleEscolherPrato = (e: any) => {
+  const handleEscolherPrato = async (e: any) => {
     const { id, value, classList } = e.target;
     classList.toggle("outline");
   };
 
   const ListaCardapio = (props: { cardapio: any }) => {
     return props.cardapio.map((e: IPrato, index: "") => (
-      <FoodCard onClick={handleEscolherPrato} id={index} key={index} />
+      <FoodCard
+        onClick={handleEscolherPrato}
+        id={index}
+        key={index}
+        nome={e.nome}
+        foto={e.foto}
+        descricao={e.descricao}
+        preco={e.preco}
+      />
     ));
   };
 
@@ -63,7 +79,7 @@ export default () => {
         </div>
       </section>
       <section className="container">
-        <ListaCardapio cardapio={cardapio} />
+        <ListaCardapio cardapio={pratos} />
       </section>
       <dialog className="off-canvas" id="carrinho-dialog">
         <article>

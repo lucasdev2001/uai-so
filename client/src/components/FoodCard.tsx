@@ -1,12 +1,16 @@
-export default (props: { onClick: any; id: "" }) => {
+export default (props: {
+  onClick: any;
+  id: "";
+  foto: "";
+  nome: "";
+  preco: "";
+  descricao: "";
+}) => {
   return (
     <>
       <div className="food-card">
         <div style={{ width: "50%" }}>
-          <img
-            src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            style={{ borderRadius: "5px" }}
-          />
+          <img src={props.foto} style={{ borderRadius: "5px" }} />
         </div>
         <div
           className="food-card-content"
@@ -16,8 +20,10 @@ export default (props: { onClick: any; id: "" }) => {
             flexDirection: "column",
           }}
         >
+          <p>{props.descricao}</p>
+          <strong>preços: {props.preco}</strong>
           <button onClick={props.onClick} id={props.id} className="outline">
-            Lagosta
+            {props.nome}
           </button>
         </div>
       </div>

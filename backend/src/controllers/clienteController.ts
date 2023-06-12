@@ -53,6 +53,7 @@ router.delete("/:id", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   const { email, senha } = req.body;
+  console.log(email, senha);
 
   try {
     const cliente = await Cliente.findOne({ email: email });

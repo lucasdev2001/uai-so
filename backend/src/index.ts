@@ -8,10 +8,10 @@ import clienteController from "./controllers/clienteController";
 import reservaController from "./controllers/reservaController";
 import funcionarioController from "./controllers/funcionarioController";
 import mensagemController from "./controllers/mensagemController";
-import testController from "./controllers/testController";
-
+import pratoController from "./controllers/pratoController";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import Prato from "./models/Prato";
 
 //env variables
 const { PORT, MONGO_URI } = process.env;
@@ -36,10 +36,10 @@ app.use("/clientes", clienteController);
 app.use("/reservas", reservaController);
 app.use("/funcionarios", funcionarioController);
 app.use("/mensagens", mensagemController);
-app.use("/test", testController);
+app.use("/pratos", pratoController);
 
 app.get("/", (req, res) => {
-  io.emit("chat message", "Luqueta da galereta");
+  io.emit("updatePratos", "Luqueta da galereta");
   res.send("Olá server");
 });
 
@@ -47,6 +47,13 @@ io.on("connection", socket => {
   socket.on("chat message", msg => {
     console.log(msg);
   });
+});
+
+//watch streams
+
+Prato.watch().on("change", data => {
+  io.emit("updatePratos", "Luqueta da galereta");
+  console.log(data);
 });
 
 httpServer.listen(PORT, () => {
