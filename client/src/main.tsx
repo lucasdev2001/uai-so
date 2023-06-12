@@ -7,12 +7,11 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Dashboard from "./routes/funcionarios/Dashboard";
 import ClienteHomePage from "./routes/clientes/ClienteHomePage";
-import Index from "./routes/funcionarios/Index";
 import ClienteLogin from "./routes/clientes/ClienteLogin";
 import ClienteReserva from "./routes/clientes/ClienteReserva";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import GestorHomePage from "./routes/funcionarios/gestor/GestorHomePage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,10 +20,7 @@ const router = createBrowserRouter(
 
       {/* funcionários */}
       <Route path="funcionario">
-        <Route element={<Dashboard />}>
-          <Route path="contatos" element={<>Hello conato</>} />
-          <Route index element={<Index />} />
-        </Route>
+        <Route path="gestor" element={<GestorHomePage />} />
       </Route>
 
       {/* clientes */}
@@ -32,7 +28,7 @@ const router = createBrowserRouter(
         <Route
           index
           element={
-            <ProtectedRoute redirectPath="/">
+            <ProtectedRoute>
               <ClienteHomePage />
             </ProtectedRoute>
           }

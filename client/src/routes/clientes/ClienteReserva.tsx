@@ -1,9 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FormReserva from "./components/FormReserva";
 import { IReserva, ICliente } from "../../types";
-import ReservaCard from "./components/ReservaCard";
 export default () => {
   const navigate = useNavigate();
   useEffect(() => {

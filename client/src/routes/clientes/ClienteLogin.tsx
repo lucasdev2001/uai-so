@@ -26,6 +26,7 @@ export default () => {
           src="/images/logo.svg"
           className="img-fluid mb-3 mt-3"
           width={350}
+          style={{ padding: "30px" }}
         />
       </header>
       <section className="container">

@@ -41,12 +41,15 @@
 
 .filters {
   display: flex;
+  justify-content: space-between;
 }
 
 .filters a {
   border-radius: 0 0 12px;
-  margin: auto;
-  justify-content: space-evenly;
+}
+
+button {
+  border-radius: 0 0 12px;
 }
 
 article {
@@ -80,6 +83,13 @@ img {
   height: 100%;
 }
 
+.food-card {
+  display: flex !important;
+  min-height: 100;
+  gap: 20px;
+}
+
 .food-card-content button {
   margin: 0;
+  margin-top: auto;
 }

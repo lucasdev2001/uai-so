@@ -1,50 +1,41 @@
 import { useEffect, useState } from "react";
-import { ICliente } from "../../types";
+import { ICliente, IPrato } from "../../types";
+import FoodCard from "../../components/FoodCard";
+import Navbar from "../../components/Navbar";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3001/");
 
 export default () => {
+  socket.on("chat message", msg => {
+    console.log(msg);
+  });
   useEffect(() => {
     const clienteLocalStorage = localStorage.getItem("cliente") ?? null;
     if (clienteLocalStorage) {
       setCliente(JSON.parse(clienteLocalStorage));
     }
   }, []);
-  const [cliente, setCliente] = useState<ICliente | null>(null);
-  const [cardapio, setCardapio] = useState([]);
+  socket.emit("chat message", "Lucas");
 
-  const mock = [
-    { nome: "Lagosta", descricao: "Uma lagosta muito gostosa", foto: "" },
-  ];
+  const [cliente, setCliente] = useState<ICliente | null>(null);
+  const [cardapio, setCardapio] = useState([1, 2, 3]);
+  const [carrinho, setCarrinho] = useState([]);
+
+  const handleEscolherPrato = (e: any) => {
+    const { id, value, classList } = e.target;
+    classList.toggle("outline");
+  };
+
+  const ListaCardapio = (props: { cardapio: any }) => {
+    return props.cardapio.map((e: IPrato, index: "") => (
+      <FoodCard onClick={handleEscolherPrato} id={index} key={index} />
+    ));
+  };
 
   return (
     <>
-      <nav className="container">
-        <ul>
-          <li>
-            <a
-              href="#"
-              className="notification"
-              style={{ position: "relative" }}
-            >
-              <i className="bi bi-bell"></i>
-              <span className="badge">1</span>
-            </a>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <details role="list" dir="rtl">
-              <summary aria-haspopup="listbox" role="link">
-                perfil
-              </summary>
-              <ul role="listbox">
-                <li>
-                  <a>Minhas reservas</a>
-                </li>
-              </ul>
-            </details>
-          </li>
-        </ul>
-      </nav>
+      <Navbar />
 
       <header className="container">
         <hgroup>
@@ -60,96 +51,75 @@ export default () => {
       <section className="container">
         <div className="filters">
           <a href="#" role="button" className="outline">
-            Principal
+            Tradicionais
           </a>
-          <a href="#" role="button" className="outline">
-            Lanche
+          <a href="#" role="button" className="">
+            Lanches
           </a>
 
-          <a href="#" role="button">
-            Sobremesa
+          <a href="#" role="button" className="outline">
+            Sobremesas
           </a>
         </div>
       </section>
       <section className="container">
-        <div
-          style={{
-            display: "flex",
-            minHeight: 100,
-            gap: 20,
-            padding: 10,
-          }}
-        >
-          <div style={{ width: "50%" }}>
-            <img
-              src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              style={{ borderRadius: "5px" }}
-            />
-          </div>
-          <div
-            className="food-card-content"
-            style={{
-              width: "50%",
-              position: "relative",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <button style={{ marginTop: "auto" }}>Lagosta</button>
-          </div>
-        </div>
+        <ListaCardapio cardapio={cardapio} />
       </section>
-      <div className="off-canvas">
-        <dialog>
-          <article>
-            <header>
-              <a
-                href="#"
-                style={{
-                  float: "right",
-                }}
-              >
-                <i className="bi bi-arrow-down-circle-fill" />
-              </a>
-              Seu carrinho
-            </header>
-            <div
+      <dialog className="off-canvas" id="carrinho-dialog">
+        <article>
+          <header>
+            <a
+              href="#"
               style={{
-                display: "flex",
-                minHeight: 200,
-                overflow: "hidden",
-                gap: "10px",
+                float: "right",
+              }}
+              onClick={() => {
+                (
+                  document.getElementById(
+                    "carrinho-dialog"
+                  ) as HTMLDialogElement
+                ).close();
               }}
             >
-              <div style={{ width: "50%" }}>
-                <img
-                  src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  style={{ borderRadius: "20px", padding: 3 }}
-                />
-              </div>
-              <div style={{ width: "50%" }}>
-                <p>
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
-                </p>
-                <p>serve duas pessoas</p>
-                <p>acompanha porco</p>
-                <br />
-                <button>Lagosta</button>
-                <div style={{ display: "flex", gap: "10px" }}>
-                  <input type="range" />
-                  <output>4</output>
-                  <a href="" style={{ float: "right" }}>
-                    <i className="bi bi-trash" />
-                  </a>
-                </div>
+              <i className="bi bi-arrow-down-circle-fill" />
+            </a>
+            Seu carrinho
+          </header>
+          <div
+            style={{
+              display: "flex",
+              minHeight: 200,
+              overflow: "hidden",
+              gap: "10px",
+            }}
+          >
+            <div style={{ width: "50%" }}>
+              <img
+                src="https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                style={{ borderRadius: "20px", padding: 3 }}
+              />
+            </div>
+            <div style={{ width: "50%" }}>
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
+              </p>
+              <p>serve duas pessoas</p>
+              <p>acompanha porco</p>
+              <br />
+              <button>Lagosta</button>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <input type="range" />
+                <output>4</output>
+                <a href="" style={{ float: "right" }}>
+                  <i className="bi bi-trash" />
+                </a>
               </div>
             </div>
-            <br />
-            <button>Agendar reserva</button>
-          </article>
-        </dialog>
-      </div>
+          </div>
+          <br />
+          <button>Agendar reserva</button>
+        </article>
+      </dialog>
     </>
   );
 };
