@@ -1,5 +1,3 @@
-import AddPrato from "../components/AddPrato";
-
 export default () => {
   return (
     <>
@@ -27,10 +25,15 @@ export default () => {
         </ul>
       </nav>
       <main className="container">
-        <details>
-          <summary>Adicionar prato</summary>
-          <AddPrato />
-        </details>
+        <aside>
+          <nav>
+            <ul>
+              <li>
+                <a href="#">Adicionar um novo prato</a>
+              </li>
+            </ul>
+          </nav>
+        </aside>
         <figure>
           <table role="grid">
             <thead>
@@ -65,27 +68,6 @@ export default () => {
             </tbody>
           </table>
         </figure>
-        <dialog open>
-          <article>
-            <header>
-              Lucas
-              <a href="#close" aria-label="Close" className="close" />
-            </header>
-            <AddPrato />
-          </article>
-        </dialog>
-        <dialog>
-          <article>
-            <header>
-              name
-              <a href="#close" aria-label="Close" className="close" />
-            </header>
-            <img
-              src="https://images.pexels.com/photos/11713104/pexels-photo-11713104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt=""
-            />
-          </article>
-        </dialog>
       </main>
     </>
   );

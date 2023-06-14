@@ -1,41 +1,20 @@
-import { useState } from "react";
-import GoBackNavbar from "../../../components/GoBackNavbar";
-import axios from "axios";
-
-export default () => {
-  const [nome, setNome] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [preco, setPreco] = useState("");
-  const [foto, setFoto] = useState<File | null>(null);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    axios
-      .postForm("http://localhost:3001/pratos", {
-        nome,
-        descricao,
-        preco,
-        foto,
-      })
-      .then(response => console.log(response.data))
-      .catch(error => console.log(error));
-  };
+export default (props: { handleInputChange: any; handleFormSubmit: any }) => {
   return (
     <>
-      <form method="POST" onSubmit={handleSubmit}>
+      <form method="POST" onSubmit={props.handleFormSubmit}>
         <input
           type="text"
           placeholder="nome"
-          onChange={e => setNome(e.target.value)}
+          onChange={props.handleInputChange}
         />
         <textarea
           placeholder="Descrição"
-          onChange={e => setDescricao(e.target.value)}
+          onChange={props.handleInputChange}
         ></textarea>
         <input
           type="text"
           placeholder="preço"
-          onChange={e => setPreco(e.target.value)}
+          onChange={props.handleInputChange}
         />
 
         <label htmlFor="">
@@ -45,7 +24,7 @@ export default () => {
             placeholder="foto"
             multiple={false}
             accept="image/*"
-            onChange={e => setFoto(e.target.files![0])}
+            onChange={props.handleInputChange}
           />
         </label>
         <button type="submit">Cadastrar</button>
