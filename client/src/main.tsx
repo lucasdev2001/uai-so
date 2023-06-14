@@ -9,9 +9,9 @@ import {
 } from "react-router-dom";
 import ClienteHomePage from "./routes/clientes/ClienteHomePage";
 import ClienteLogin from "./routes/clientes/ClienteLogin";
-import ClienteReserva from "./routes/clientes/ClienteReserva";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import GestorHomePage from "./routes/funcionarios/gestor/GestorHomePage";
+import AddPrato from "./routes/funcionarios/components/AddPrato";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +21,7 @@ const router = createBrowserRouter(
       {/* funcionários */}
       <Route path="funcionario">
         <Route path="gestor" element={<GestorHomePage />} />
+        <Route path="adicionar-prato" element={<AddPrato />} />
       </Route>
 
       {/* clientes */}
@@ -34,7 +35,6 @@ const router = createBrowserRouter(
           }
         />
         <Route path="login" element={<ClienteLogin />} />
-        <Route path="reserva" element={<ClienteReserva />} />
       </Route>
     </Route>
   )

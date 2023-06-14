@@ -9,20 +9,16 @@ export default (props: {
   return (
     <>
       <div className="food-card">
-        <div style={{ width: "50%" }}>
+        <div className="food-card-image">
           <img src={props.foto} style={{ borderRadius: "5px" }} />
         </div>
-        <div
-          className="food-card-content"
-          style={{
-            width: "50%",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <p>{props.descricao}</p>
-          <strong>preços: {props.preco}</strong>
-          <button onClick={props.onClick} id={props.id} className="outline">
+        <div className="food-card-content">
+          <p style={{ marginBottom: "auto", flexGrow: 1 }}>
+            {props.descricao}
+            <a href="#">...detalhes</a>
+          </p>
+          <small>{props.preco}</small>
+          <button onClick={props.onClick} id={props.id} className="">
             {props.nome}
           </button>
         </div>

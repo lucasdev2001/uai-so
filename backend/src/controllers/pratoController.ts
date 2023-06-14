@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Prato from "../models/Prato";
+import { upload } from "../middlewares/multerController";
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -12,20 +13,22 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("foto"), async (req, res) => {
   try {
     const { nome, foto, descricao, preco } = req.body;
+    const fotoPath = req.file?.path ?? "emty answer";
+    console.log(fotoPath);
 
-    const newPrato = new Prato({
+    const prato = new Prato({
       nome,
-      foto,
+      foto: fotoPath,
       descricao,
       preco,
     });
 
-    await newPrato.save();
+    await prato.save();
 
-    res.status(201).json(newPrato);
+    res.status(201).json(prato);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });

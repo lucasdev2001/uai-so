@@ -1,19 +1,10 @@
+import { Link } from "react-router-dom";
+
 export default () => {
   return (
     <>
       <nav className="container">
-        <ul>
-          <li>
-            <a
-              href="#"
-              className="notification"
-              style={{ position: "relative" }}
-            >
-              <i className="bi bi-bell"></i>
-              <span className="badge">1</span>
-            </a>
-          </li>
-        </ul>
+        <ul></ul>
         <ul>
           <li>
             <details role="list" dir="rtl">
@@ -22,7 +13,15 @@ export default () => {
               </summary>
               <ul role="listbox">
                 <li>
-                  <a>Minhas reservas</a>
+                  <a href="#">Minha conta</a>
+                </li>
+                <li>
+                  <a href="#">Escrever Feedback</a>
+                </li>
+                <li>
+                  <Link to={"/"} onClick={() => localStorage.clear()}>
+                    Sair
+                  </Link>
                 </li>
               </ul>
             </details>

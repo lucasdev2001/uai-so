@@ -8,6 +8,9 @@ export default () => {
   const navigate = useNavigate();
   const handleLogin = (e: any) => {
     e.preventDefault();
+    console.log(email);
+    console.log(senha);
+
     axios
       .post("http://localhost:3001/clientes/login", {
         email,
@@ -21,7 +24,7 @@ export default () => {
   };
   return (
     <>
-      <header className="container text-center">
+      <header className="container">
         <img
           src="/images/logo.svg"
           className="img-fluid mb-3 mt-3"
@@ -32,25 +35,25 @@ export default () => {
       <section className="container">
         <form onSubmit={handleLogin}>
           <input
-            type="email"
-            placeholder="email"
+            type="tel"
+            placeholder="Número de telefone"
             required
             onChange={e => setEmail(e.target.value)}
           />
+
           <input
             type="password"
-            placeholder="senha"
+            placeholder="Senha"
             required
             onChange={e => setSenha(e.target.value)}
           />
-          <button type="submit">login</button>
+          <button type="submit">Login</button>
           <a href="#">Ainda não possuí conta ?</a>
         </form>
       </section>
-      <footer className="text-center position-absolute bottom-0 w-100 container p-3">
-        <small>
-          <a href="#">Faz parte da equipe ?</a>
-        </small>
+      <section className="container"></section>
+      <footer>
+        <a href="#">faz parte da equipe ?</a>
       </footer>
     </>
   );

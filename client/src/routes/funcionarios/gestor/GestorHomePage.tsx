@@ -1,4 +1,4 @@
-import FoodCard from "../../../components/FoodCard";
+import AddPrato from "../components/AddPrato";
 
 export default () => {
   return (
@@ -7,12 +7,9 @@ export default () => {
         <ul></ul>
         <ul>
           <li>
-            <a href="#">Link</a>
-          </li>
-          <li>
             <details role="list" dir="rtl">
               <summary aria-haspopup="listbox" role="link">
-                Cardápio
+                perfil
               </summary>
               <ul role="listbox">
                 <li>
@@ -29,24 +26,11 @@ export default () => {
           </li>
         </ul>
       </nav>
-      <main className="container-fluid">
-        <article>
-          <header>
-            Lagosta{" "}
-            <a href="#">
-              <i className="bi bi-eye" />
-            </a>
-          </header>
-          <input type="text" placeholder="nome" />
-          <textarea name="" id="" placeholder="Descrição"></textarea>
-          <input type="text" placeholder="preço" />
-          <ul>
-            <li>Lagosta</li>
-            <li>Limão</li>
-            <li>Sal</li>
-          </ul>
-          <input type="file" placeholder="foto" />
-        </article>
+      <main className="container">
+        <details>
+          <summary>Adicionar prato</summary>
+          <AddPrato />
+        </details>
         <figure>
           <table role="grid">
             <thead>
@@ -54,25 +38,54 @@ export default () => {
                 <th scope="col">Foto</th>
 
                 <th scope="col">Nome</th>
+                <th scope="col">Status</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>eye</td>
+                <td>
+                  <center>
+                    <a href="#">
+                      <i className="bi bi-eye" />
+                    </a>
+                  </center>
+                </td>
                 <td>Lagosta</td>
 
+                <td>O prato está atualmente visível</td>
                 <td>
                   <a href="#">Editar</a>
                   <br />
                   <a href="#">Excluír</a>
                   <br />
-                  <a href="#">Pendenciar</a>
+                  <a href="#">Ocultar</a>
                 </td>
               </tr>
             </tbody>
           </table>
         </figure>
+        <dialog open>
+          <article>
+            <header>
+              Lucas
+              <a href="#close" aria-label="Close" className="close" />
+            </header>
+            <AddPrato />
+          </article>
+        </dialog>
+        <dialog>
+          <article>
+            <header>
+              name
+              <a href="#close" aria-label="Close" className="close" />
+            </header>
+            <img
+              src="https://images.pexels.com/photos/11713104/pexels-photo-11713104.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt=""
+            />
+          </article>
+        </dialog>
       </main>
     </>
   );
