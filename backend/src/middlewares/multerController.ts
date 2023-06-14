@@ -1,11 +1,15 @@
 import multer from "multer";
+import fs from "node:fs";
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "D:images");
+    const storagePath = "./images";
+
+    fs.mkdirSync(storagePath, { recursive: true });
+    cb(null, storagePath);
   },
   filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e2);
-    cb(null, uniqueSuffix + file.originalname);
+    cb(null, file.originalname);
   },
 });
 

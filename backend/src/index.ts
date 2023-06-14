@@ -31,6 +31,7 @@ mongoose.connect(mongo_uri).catch(error => console.log(error));
 //middleweres
 app.use(express.json());
 app.use(express.urlencoded());
+
 app.use(cors());
 
 //rotas
@@ -42,7 +43,6 @@ app.use("/files", filesController);
 
 app.get("/", (req, res) => {
   io.emit("updatePratos", "Luqueta da galereta");
-  res.send("Olá server");
 });
 
 io.on("connection", socket => {
@@ -55,7 +55,7 @@ io.on("connection", socket => {
 
 Prato.watch().on("change", data => {
   io.emit("updatePratos", "Um registro foi inserido/atualizado");
-  console.log(data);
+  console.log("att");
 });
 
 httpServer.listen(PORT, () => {

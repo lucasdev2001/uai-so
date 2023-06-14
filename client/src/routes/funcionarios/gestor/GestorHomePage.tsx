@@ -1,4 +1,49 @@
+import axios from "axios";
+import Dialog from "../../../components/Dialog";
+import AddPrato from "../components/AddPrato";
+import { useEffect, useState } from "react";
+import { io } from "socket.io-client";
+import TabelaCardapio from "../components/tabelaCardapio";
+const socket = io("http://localhost:3001/");
+
 export default () => {
+  socket.on("updatePratos", () => {
+    axios
+      .get("http://localhost:3001/pratos")
+      .then(response => setCardapio(response.data));
+  });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/pratos")
+      .then(response => setCardapio(response.data));
+  }, []);
+
+  const [prato, setPrato] = useState<any>(null);
+  const [cardapio, setCardapio] = useState<any>(null);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    axios
+      .postForm("http://localhost:3001/pratos", prato)
+      .then(() => {})
+      .catch(error => console.log(error));
+  };
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    if (name === "foto") {
+      setPrato({
+        ...prato,
+        foto: e.target.files[0],
+      });
+    } else {
+      setPrato({
+        ...prato,
+        [name]: value,
+      });
+    }
+  };
+
   return (
     <>
       <nav className="container">
@@ -29,45 +74,26 @@ export default () => {
           <nav>
             <ul>
               <li>
-                <a href="#">Adicionar um novo prato</a>
+                <a
+                  href="#"
+                  onClick={() =>
+                    (
+                      document.getElementById("add-prato") as HTMLDialogElement
+                    ).show()
+                  }
+                >
+                  Adicionar um novo prato
+                </a>
               </li>
             </ul>
           </nav>
         </aside>
-        <figure>
-          <table role="grid">
-            <thead>
-              <tr>
-                <th scope="col">Foto</th>
-
-                <th scope="col">Nome</th>
-                <th scope="col">Status</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <center>
-                    <a href="#">
-                      <i className="bi bi-eye" />
-                    </a>
-                  </center>
-                </td>
-                <td>Lagosta</td>
-
-                <td>O prato está atualmente visível</td>
-                <td>
-                  <a href="#">Editar</a>
-                  <br />
-                  <a href="#">Excluír</a>
-                  <br />
-                  <a href="#">Ocultar</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </figure>
+        <Dialog title={prato && prato.nome} dialogId={"add-prato"}>
+          <AddPrato
+            onInputChange={handleInputChange}
+            onFormSubmit={handleSubmit}
+          />
+        </Dialog>
       </main>
     </>
   );

@@ -108,7 +108,11 @@ footer {
 }
 
 .container {
-  animation: fadeIn 0.5s;
+  animation: fadeIn 3s;
+}
+
+textarea {
+  resize: none;
 }
 
 @keyframes fadeIn {

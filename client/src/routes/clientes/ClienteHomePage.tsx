@@ -8,11 +8,7 @@ import axios from "axios";
 const socket = io("http://localhost:3001/");
 
 export default () => {
-  socket.on("updatePratos", () => {
-    axios
-      .get("http://localhost:3001/pratos")
-      .then(response => setPratos(response.data));
-  });
+  socket.on("updatePratos", () => {});
 
   const [cliente, setCliente] = useState<ICliente | null>(null);
   const [pratos, setPratos] = useState([]);

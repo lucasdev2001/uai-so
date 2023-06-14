@@ -15,9 +15,10 @@ export interface ICliente {
 }
 
 export interface IPrato {
-  _id: "";
+  _id: string | null;
   nome: "";
   foto: "";
   descricao: "";
   preco: "";
+  disponibel: boolean;
 }

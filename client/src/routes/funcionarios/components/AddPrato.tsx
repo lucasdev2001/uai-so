@@ -1,30 +1,34 @@
-export default (props: { handleInputChange: any; handleFormSubmit: any }) => {
+export default (props: { onInputChange: any; onFormSubmit: any }) => {
   return (
     <>
-      <form method="POST" onSubmit={props.handleFormSubmit}>
+      <form onSubmit={props.onFormSubmit} encType="multipart/form-data">
         <input
           type="text"
           placeholder="nome"
-          onChange={props.handleInputChange}
+          onChange={props.onInputChange}
+          name="nome"
         />
         <textarea
           placeholder="Descrição"
-          onChange={props.handleInputChange}
+          onChange={props.onInputChange}
+          name="descricao"
         ></textarea>
         <input
           type="text"
           placeholder="preço"
-          onChange={props.handleInputChange}
+          onChange={props.onInputChange}
+          name="preco"
         />
 
         <label htmlFor="">
           foto
           <input
+            name="foto"
             type="file"
             placeholder="foto"
             multiple={false}
             accept="image/*"
-            onChange={props.handleInputChange}
+            onChange={props.onInputChange}
           />
         </label>
         <button type="submit">Cadastrar</button>

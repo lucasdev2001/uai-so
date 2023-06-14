@@ -15,13 +15,11 @@ router.get("/", async (req, res) => {
 
 router.post("/", upload.single("foto"), async (req, res) => {
   try {
-    const { nome, foto, descricao, preco } = req.body;
-    const fotoPath = req.file?.path ?? "emty answer";
-    console.log(fotoPath);
+    const { nome, descricao, preco } = req.body;
 
     const prato = new Prato({
       nome,
-      foto: fotoPath,
+      foto: req.file.originalname,
       descricao,
       preco,
     });
