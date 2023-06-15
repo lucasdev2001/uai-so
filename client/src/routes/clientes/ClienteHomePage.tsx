@@ -1,25 +1,31 @@
 import { useEffect, useState } from "react";
-import { ICliente, IPrato } from "../../types";
+import { ICliente } from "../../types";
 import FoodCard from "../../components/FoodCard";
 import Navbar from "../../components/Navbar";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const socket = io("http://localhost:3001/");
-
+const socket = io(import.meta.env.VITE_HOST);
+socket.on("connection", () => {
+  socket.emit("updatePratos", "fetch origin");
+});
 export default () => {
-  socket.on("updatePratos", () => {});
+  socket.on("updatePratos", async () => {
+    setPratos(
+      await axios(import.meta.env.VITE_HOST + "/pratos").then(res => res.data)
+    );
+  });
 
-  const [cliente, setCliente] = useState<ICliente | null>(null);
+  const [usuario, setUsuario] = useState<ICliente | null>(null);
   const [pratos, setPratos] = useState([]);
 
   useEffect(() => {
-    const clienteLocalStorage = localStorage.getItem("cliente") ?? null;
-    if (clienteLocalStorage) {
-      setCliente(JSON.parse(clienteLocalStorage));
+    const usuarioLocalStorage = localStorage.getItem("usuario") ?? null;
+    if (usuarioLocalStorage) {
+      setUsuario(JSON.parse(usuarioLocalStorage));
     }
     axios
-      .get("http://localhost:3001/pratos")
+      .get(import.meta.env.VITE_HOST + "/pratos")
       .then(response => setPratos(response.data));
   }, []);
 
@@ -29,16 +35,18 @@ export default () => {
   };
 
   const ListaCardapio = (props: { cardapio: any }) => {
-    return props.cardapio.map((e: IPrato, index: "") => (
-      <FoodCard
-        onClick={handleEscolherPrato}
-        id={index}
-        key={index}
-        nome={e.nome}
-        foto={e.foto}
-        descricao={e.descricao}
-        preco={e.preco}
-      />
+    return props.cardapio.map((e: any, index: "") => (
+      <>
+        <FoodCard
+          onClick={handleEscolherPrato}
+          id={index}
+          key={index}
+          nome={e.nome}
+          foto={e.foto}
+          descricao={e.descricao}
+          preco={e.preco}
+        />
+      </>
     ));
   };
 
@@ -48,7 +56,7 @@ export default () => {
 
       <header className="container">
         <hgroup>
-          <h2>Bem vindo {cliente?.nome}</h2>
+          <h2>Bem vindo {usuario?.nome}</h2>
           <h3>Dê uma olhada no cardápio de hoje!</h3>
         </hgroup>
       </header>

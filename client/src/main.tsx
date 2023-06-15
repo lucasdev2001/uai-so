@@ -10,8 +10,8 @@ import {
 import ClienteHomePage from "./routes/clientes/ClienteHomePage";
 import ClienteLogin from "./routes/clientes/ClienteLogin";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import GestorHomePage from "./routes/funcionarios/gestor/GestorHomePage";
-import AddPrato from "./routes/funcionarios/components/AddPrato";
+import Cardapio from "./routes/funcionarios/Cardapio";
+import Garcom from "./routes/funcionarios/Garcom";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,8 +20,8 @@ const router = createBrowserRouter(
 
       {/* funcionários */}
       <Route path="funcionario">
-        <Route path="gestor" element={<GestorHomePage />} />
-        <Route path="adicionar-prato" element={<AddPrato />} />
+        <Route path="cardapio" element={<Cardapio />} />
+        <Route path="garcom" element={<Garcom />} />
       </Route>
 
       {/* clientes */}

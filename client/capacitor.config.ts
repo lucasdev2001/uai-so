@@ -1,12 +1,12 @@
-import { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: 'client.com.br',
-  appName: 'client',
-  webDir: 'dist',
+  appId: "client.com.br",
+  appName: "client",
+  webDir: "dist",
   server: {
-    androidScheme: 'https'
-  }
+    androidScheme: "http",
+  },
 };
 
 export default config;

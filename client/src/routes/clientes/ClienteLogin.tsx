@@ -1,29 +1,28 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 export default () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const navigate = useNavigate();
-  const handleLogin = (e: any) => {
+  const [message, setMessage] = useState("");
+  const handleLogin = async (e: any) => {
     e.preventDefault();
-    console.log(email);
-    console.log(senha);
-
-    axios
-      .post("http://localhost:3001/clientes/login", {
+    const usuario = await axios.post(
+      import.meta.env.VITE_HOST + "/clientes/login",
+      {
         email,
         senha,
-      })
-      .then(res => {
-        localStorage.setItem("cliente", JSON.stringify(res.data));
-        navigate("/cliente");
-      })
-      .catch(err => console.log(err));
+      }
+    );
+    await localStorage.setItem("usuario", JSON.stringify(usuario.data));
+    await setMessage(JSON.stringify(usuario.data));
+    navigate("/cliente");
   };
+
   return (
     <>
+      {message && localStorage.getItem("usuario")}
       <header className="container">
         <img
           src="/images/logo.svg"
@@ -35,8 +34,8 @@ export default () => {
       <section className="container">
         <form onSubmit={handleLogin}>
           <input
-            type="tel"
-            placeholder="Número de telefone"
+            type="text"
+            placeholder="E-mail"
             required
             onChange={e => setEmail(e.target.value)}
           />
@@ -52,9 +51,6 @@ export default () => {
         </form>
       </section>
       <section className="container"></section>
-      <footer>
-        <a href="#">faz parte da equipe ?</a>
-      </footer>
     </>
   );
 };

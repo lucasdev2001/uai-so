@@ -4,7 +4,11 @@ export default () => {
   return (
     <>
       <nav className="container">
-        <ul></ul>
+        <ul>
+          <li>
+            <strong>Uai Sô</strong>
+          </li>
+        </ul>
         <ul>
           <li>
             <details role="list" dir="rtl">

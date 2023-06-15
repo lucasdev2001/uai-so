@@ -1,5 +1,6 @@
 @import url("https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css");
+@import url("https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css");
 
 [data-theme="light"],
 :root:not([data-theme="dark"]) {
@@ -79,7 +80,7 @@ img {
 
 .food-card {
   display: flex;
-  height: 200px;
+  min-height: 200px;
   gap: 20px;
 }
 
@@ -100,26 +101,18 @@ img {
 
 footer {
   position: fixed;
-  padding: 10px;
+  font-size: 2rem;
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
 }
 
-.container {
-  animation: fadeIn 3s;
+footer a {
+  border-radius: 10px;
+  padding: 5px;
 }
 
 textarea {
   resize: none;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  77% {
-    opacity: 1;
-  }
 }

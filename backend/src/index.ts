@@ -11,7 +11,7 @@ import pratoController from "./controllers/pratoController";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import Prato from "./models/Prato";
-import filesController from "./controllers/filesController";
+import imagesController from "./controllers/imagesController";
 
 //env variables
 const { PORT, MONGO_URI } = process.env;
@@ -39,10 +39,11 @@ app.use("/clientes", clienteController);
 app.use("/funcionarios", funcionarioController);
 app.use("/mensagens", mensagemController);
 app.use("/pratos", pratoController);
-app.use("/files", filesController);
+app.use("/images", imagesController);
 
 app.get("/", (req, res) => {
   io.emit("updatePratos", "Luqueta da galereta");
+  res.send("i am alive");
 });
 
 io.on("connection", socket => {
@@ -55,7 +56,6 @@ io.on("connection", socket => {
 
 Prato.watch().on("change", data => {
   io.emit("updatePratos", "Um registro foi inserido/atualizado");
-  console.log("att");
 });
 
 httpServer.listen(PORT, () => {

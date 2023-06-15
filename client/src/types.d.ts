@@ -13,12 +13,3 @@ export interface ICliente {
   nome: String;
   email: String;
 }
-
-export interface IPrato {
-  _id: string | null;
-  nome: "";
-  foto: "";
-  descricao: "";
-  preco: "";
-  disponibel: boolean;
-}

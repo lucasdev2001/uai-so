@@ -1,11 +1,8 @@
-import { IPrato } from "../../../types";
-
 export default (props: {
-  arrayCardapio: [IPrato];
+  arrayCardapio: [any];
   clickVisualizar: any;
   clickEditar: any;
   clickExcluir: any;
-  clickOcultar: any;
 }) => {
   return (
     <>
@@ -40,9 +37,6 @@ export default (props: {
                     Excluír
                   </a>
                   <br />
-                  <a href="#" onClick={props.clickOcultar}>
-                    Ocultar
-                  </a>
                 </td>
               </tr>
             ))}
