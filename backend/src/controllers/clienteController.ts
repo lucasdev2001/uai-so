@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const clientes = await Cliente.find().populate("reservas");
+    const clientes = await Cliente.find({});
     res.status(200).send(clientes);
   } catch (error) {
     res.status(500).send(error);

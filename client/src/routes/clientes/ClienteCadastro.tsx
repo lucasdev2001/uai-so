@@ -5,16 +5,15 @@ export default () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [confirmaSenha, setConfirmaSenha] = useState("");
   const [message, setMessage] = useState("");
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    const usuario = await axios.post(
-      import.meta.env.VITE_HOST + "/clientes/login",
-      {
-        email,
-        senha,
-      }
-    );
+    if (confirmaSenha !== senha) window.alert("As enhas não são iguais");
+    const usuario = await axios.post(import.meta.env.VITE_HOST + "/clientes/", {
+      email,
+      senha,
+    });
     await localStorage.setItem("usuario", JSON.stringify(usuario.data));
     await setMessage(JSON.stringify(usuario.data));
     navigate("/cliente");
@@ -46,13 +45,16 @@ export default () => {
             required
             onChange={e => setSenha(e.target.value)}
           />
-          <button type="submit">Login</button>
-          <Link to={"/cliente/cadastrar"}> Ainda não possuí conta ?</Link>
-          <br />
-          <Link to={"/funcionario/login"}>Faz parte da equipe ?</Link>
+          <input
+            type="password"
+            placeholder="confirmpassword"
+            required
+            onChange={e => setConfirmaSenha(e.target.value)}
+          />
+          <button type="submit">cadastrar</button>
+          <Link to={"/"}>Já possuí conta ?</Link>
         </form>
       </section>
-      <section className="container"></section>
     </>
   );
 };

@@ -5,27 +5,34 @@ export default () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [message, setMessage] = useState("");
+  const [usuario, setUsuario] = useState<any>("");
   const handleLogin = async (e: any) => {
     e.preventDefault();
-    const usuario = await axios.post(
-      import.meta.env.VITE_HOST + "/clientes/login",
-      {
+    axios
+      .post(import.meta.env.VITE_HOST + "/funcionarios/login", {
         email,
         senha,
-      }
-    );
-    await localStorage.setItem("usuario", JSON.stringify(usuario.data));
-    await setMessage(JSON.stringify(usuario.data));
-    navigate("/cliente");
+      })
+      .then(res => {
+        localStorage.setItem("usuario", JSON.stringify(res.data));
+        setUsuario(res.data);
+        if (usuario.grupo === "gestor") {
+          navigate("/funcionario/gestor");
+        }
+        if (usuario.grupo === "cozinheiro") {
+          navigate("/funcionario/cozinheiro");
+        }
+        if (usuario.grupo === "garçom") {
+          navigate("/funcionario/garcom");
+        }
+      });
   };
 
   return (
     <>
-      {message && localStorage.getItem("usuario")}
       <header className="container">
         <img
-          src="/images/logo.svg"
+          src="/images/funcionario-logo.svg"
           className="img-fluid mb-3 mt-3"
           width={350}
           style={{ padding: "30px" }}
@@ -42,14 +49,13 @@ export default () => {
 
           <input
             type="password"
-            placeholder="Senha"
+            placeholder="código de acesso"
             required
             onChange={e => setSenha(e.target.value)}
           />
           <button type="submit">Login</button>
-          <Link to={"/cliente/cadastrar"}> Ainda não possuí conta ?</Link>
+          <Link to={"./"}> voltar a cliente</Link>
           <br />
-          <Link to={"/funcionario/login"}>Faz parte da equipe ?</Link>
         </form>
       </section>
       <section className="container"></section>

@@ -12,6 +12,11 @@ import ClienteLogin from "./routes/clientes/ClienteLogin";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Cardapio from "./routes/funcionarios/Cardapio";
 import Garcom from "./routes/funcionarios/Garcom";
+import Cozinheiro from "./routes/funcionarios/Cozinheiro";
+import Gestor from "./routes/funcionarios/Gestor";
+import LoginFuncionario from "./routes/funcionarios/LoginFuncionario";
+import ProtectedRouteGestor from "./routes/funcionarios/ProtectedRouteGestor";
+import ClienteCadastro from "./routes/clientes/ClienteCadastro";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +27,16 @@ const router = createBrowserRouter(
       <Route path="funcionario">
         <Route path="cardapio" element={<Cardapio />} />
         <Route path="garcom" element={<Garcom />} />
+        <Route path="cozinheiro" element={<Cozinheiro />} />
+        <Route
+          path="gestor"
+          element={
+            <ProtectedRouteGestor>
+              <Gestor />
+            </ProtectedRouteGestor>
+          }
+        />
+        <Route path="login" element={<LoginFuncionario />} />
       </Route>
 
       {/* clientes */}
@@ -35,6 +50,7 @@ const router = createBrowserRouter(
           }
         />
         <Route path="login" element={<ClienteLogin />} />
+        <Route path="cadastrar" element={<ClienteCadastro />} />
       </Route>
     </Route>
   )

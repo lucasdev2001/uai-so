@@ -99,20 +99,11 @@ img {
   margin-top: auto;
 }
 
-footer {
-  position: fixed;
-  font-size: 2rem;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-}
-
-footer a {
-  border-radius: 10px;
-  padding: 5px;
-}
-
 textarea {
   resize: none;
+}
+
+.disableDiv {
+  pointer-events: none;
+  opacity: 0.4;
 }

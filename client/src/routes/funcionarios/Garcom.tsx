@@ -1,17 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { io } from "socket.io-client";
+import FuncionariosNavbar from "../../components/FuncionariosNavbar";
+const socket = io(import.meta.env.VITE_HOST);
 
 export default () => {
-  const [cardapio, setCardapio] = useState<any>([{}]);
-  const [quantidade, setQuantidade] = useState("1");
-  const [prato, setPrato] = useState({});
-  const [pratosEscolhidos, setPratosEscolhidos] = useState({});
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [cardapio, setCardapio] = useState<any>([]);
+  const [prato, setPrato] = useState<any>({
+    qtd: "1",
+  });
+  const [pratosEscolhidos, setPratosEscolhidos] = useState<any>([]);
   useEffect(() => {
     axios(import.meta.env.VITE_HOST + "/pratos")
       .then(res => setCardapio(res.data))
       .catch(error => console.log(error));
   }, []);
 
+  socket.on("atualizarPedidos", () => {
+    Swal.fire("The Internet?", "That thing is still around?", "question");
+  });
   const handleInputNClick = (e: any) => {
     if (e.target.name === "qtd") {
       setPrato({
@@ -19,90 +29,158 @@ export default () => {
         qtd: e.target.value,
       });
     } else {
+      prato.nome = e.target.id;
+
+      prato.tmpId = Math.floor(Math.random() * 16777215).toString(16);
+
       setPrato({
         ...prato,
-        nome: e.target.id,
       });
+      setPratosEscolhidos((pratosEscolhidos: any) => [
+        ...pratosEscolhidos,
+        prato,
+      ]);
     }
+  };
+
+  const handlePesquisa = (e: any) => {
+    const value = e.target.value;
+    console.log(e.target.value);
+    console.log(cardapio);
+    const filteredArray = cardapio.filter((e: any) =>
+      e.nome.toLowerCase().includes(value)
+    );
+    if (value === "" || cardapio.length === 0) {
+      axios(import.meta.env.VITE_HOST + "/pratos")
+        .then(res => setCardapio(res.data))
+        .catch(error => console.log(error));
+    }
+    setCardapio(filteredArray);
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    axios
+      .post(import.meta.env.VITE_HOST + "/pedidos", {
+        senhaPedido: Math.floor(Math.random() * 16777215).toString(16),
+        pratos: pratosEscolhidos,
+        nomeCliente: nome,
+        descricao: descricao,
+      })
+      .then(() => {
+        Swal.fire({
+          title: "Sucesso!",
+          text: "O Pedido foi enviado para a cozinha!",
+          icon: "success",
+          confirmButtonColor: "#e53935",
+        });
+        e.target.reset();
+        setPratosEscolhidos([]);
+      })
+      .catch(error => {
+        console.log(error);
+        Swal.fire({
+          title: "Erro",
+          text: "Houve um erro" + `${error}`,
+          icon: "error",
+          confirmButtonColor: "#e53935",
+        });
+      });
   };
   return (
     <>
-      <nav className="container">
-        <ul>
-          <li>
-            <strong>Uai Sô</strong>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <a href="#">Link</a>
-          </li>
-          <li>
-            <a href="#">Link</a>
-          </li>
-          <li>
-            <a href="#" role="button">
-              Button
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <br />
+      <FuncionariosNavbar />
       <main className="container">
-        <div
-          style={{
-            display: "flex",
-            gap: "10px",
-            flexWrap: "wrap",
-            justifyContent: "space-around",
-          }}
-        >
-          <a href="#" className="secondary">
-            2xLagosta
-          </a>
-        </div>
-        <br />
-        <input type="search" placeholder="achar prato" />
-        <hr />
-        <br />
-
-        <details open>
-          <summary>pratos</summary>
-          <input
-            type="range"
-            defaultValue={quantidade}
-            min={1}
-            max={5}
-            name="qtd"
-            onChange={handleInputNClick}
-          />
-
+        <form action="#" method="POST" onSubmit={handleSubmit}>
           <div
             style={{
               display: "flex",
               gap: "10px",
               flexWrap: "wrap",
+              justifyContent: "space-around",
             }}
           >
-            {cardapio.map((e: any) => (
-              <a
-                href="#"
-                className="secondary"
-                key={e._id}
-                onClick={handleInputNClick}
-                id={e.nome}
-              >
-                {e.nome}
-              </a>
+            {pratosEscolhidos.map((e: any) => (
+              <>
+                <a
+                  href="#"
+                  className="secondary"
+                  id={e.tmpId}
+                  onClick={(prato: any) =>
+                    setPratosEscolhidos(
+                      pratosEscolhidos.filter(
+                        (e: any) => e.tmpId !== prato.target.id
+                      )
+                    )
+                  }
+                >
+                  {e.qtd}x{e.nome}
+                </a>
+              </>
             ))}
           </div>
-        </details>
-        <br />
-        <details open>
-          <summary>Detalhes do pedido</summary>
-          <input type="text" placeholder="nome do cliente" />
-          <textarea placeholder="detalhes"></textarea>
-        </details>
+          <br />
+          <input
+            type="search"
+            placeholder="achar prato"
+            onChange={handlePesquisa}
+          />
+          <hr />
+          <br />
+
+          <details open>
+            <summary>pratos</summary>
+            <div style={{ display: "flex", gap: "10px" }}>
+              <input
+                type="range"
+                defaultValue={1}
+                min={1}
+                max={5}
+                name="qtd"
+                onChange={handleInputNClick}
+                required
+              />
+              <span>{prato.qtd}</span>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+              }}
+            >
+              {cardapio.map((e: any) => (
+                <a
+                  href="#"
+                  className="secondary"
+                  key={e._id}
+                  onClick={handleInputNClick}
+                  id={e.nome}
+                >
+                  {e.nome}
+                </a>
+              ))}
+            </div>
+          </details>
+          <br />
+          <details open>
+            <summary>Detalhes do pedido</summary>
+
+            <input
+              type="text"
+              placeholder="nome do cliente"
+              onChange={e => setNome(e.target.value)}
+              required
+            />
+            <textarea
+              placeholder="detalhes"
+              onChange={e => setDescricao(e.target.value)}
+              required
+            ></textarea>
+            <button>enviar pedido</button>
+          </details>
+        </form>
       </main>
     </>
   );

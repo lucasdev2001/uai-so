@@ -3,14 +3,17 @@ import Dialog from "../../components/Dialog";
 import AddPrato from "./components/AddPrato";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
+import FuncionariosNavbar from "../../components/FuncionariosNavbar";
 
 const socket = io(import.meta.env.VITE_HOST);
 socket.on("connection", () => {
   socket.emit("updatePratos", "fetch origin");
 });
 export default () => {
+  const [cardapio, setCardapio] = useState<any>([]);
+
   socket.on("updatePratos", () => {
     axios(import.meta.env.VITE_HOST + "/pratos").then(res =>
       setCardapio(res.data)
@@ -18,7 +21,14 @@ export default () => {
   });
 
   const [prato, setPrato] = useState<any>({});
-  const [cardapio, setCardapio] = useState<any>([]);
+  useEffect(() => {
+    if (cardapio.length === 0) {
+      console.log(true);
+      axios(import.meta.env.VITE_HOST + "/pratos").then(res =>
+        setCardapio(res.data)
+      );
+    }
+  }, []);
   const handleAddPrato = (e: any) => {
     e.preventDefault();
     axios
@@ -45,6 +55,7 @@ export default () => {
 
   const handleEditarPrato = (e: any) => {
     e.preventDefault();
+
     axios
       .putForm(import.meta.env.VITE_HOST + "/pratos/" + prato._id, prato)
       .then(() => {
@@ -82,9 +93,21 @@ export default () => {
     console.log(prato);
   };
   const handleOpenEditar = (e: any) => {
-    const id = e.currentTarget.parentElement;
+    const id = e.currentTarget.parentElement.id;
+    console.log(id);
+
     setPrato(cardapio.find((e: any) => e._id === id));
     (document.getElementById("editar-prato") as HTMLDialogElement).show();
+  };
+
+  const handleView = (e: any) => {
+    const obj = cardapio.find((obj: any) => obj._id === e.target.id);
+    console.log(obj);
+    console.log();
+
+    Swal.fire({
+      imageUrl: `${import.meta.env.VITE_HOST + "/images/" + obj.foto}`,
+    });
   };
 
   const handleExcluirPrato = (e: any) => {
@@ -112,18 +135,7 @@ export default () => {
   };
   return (
     <>
-      <nav className="container">
-        <ul>
-          <li>
-            <strong>uai sô</strong>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <a href="#">Início</a>
-          </li>
-        </ul>
-      </nav>
+      <FuncionariosNavbar />
 
       <main className="container">
         <nav aria-label="breadcrumb">
@@ -145,13 +157,14 @@ export default () => {
       </main>
       <section>
         <TabelaCardapio
+          clickVisualizar={handleView}
           arrayCardapio={cardapio}
           clickEditar={handleOpenEditar}
           clickExcluir={handleExcluirPrato}
         />
       </section>
 
-      <Dialog dialogId="add-prato" title={"título"}>
+      <Dialog dialogId="add-prato">
         <AddPrato
           onFormSubmit={handleAddPrato}
           onInputChange={handleInputChange}

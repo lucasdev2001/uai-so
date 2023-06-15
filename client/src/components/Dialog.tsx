@@ -1,4 +1,4 @@
-export default (props: { children: any; title: any; dialogId: string }) => {
+export default (props: { children: any; dialogId: string }) => {
   return (
     <>
       <dialog id={props.dialogId}>
@@ -14,7 +14,6 @@ export default (props: { children: any; title: any; dialogId: string }) => {
                 ).close()
               }
             />
-            {props.title}
           </header>
           {props.children}
         </article>

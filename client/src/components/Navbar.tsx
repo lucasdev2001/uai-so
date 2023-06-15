@@ -17,12 +17,6 @@ export default () => {
               </summary>
               <ul role="listbox">
                 <li>
-                  <a href="#">Minha conta</a>
-                </li>
-                <li>
-                  <a href="#">Escrever Feedback</a>
-                </li>
-                <li>
                   <Link to={"/"} onClick={() => localStorage.clear()}>
                     Sair
                   </Link>

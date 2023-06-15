@@ -6,12 +6,14 @@ import cors from "cors";
 //controllers
 import clienteController from "./controllers/clienteController";
 import funcionarioController from "./controllers/funcionarioController";
-import mensagemController from "./controllers/mensagemController";
 import pratoController from "./controllers/pratoController";
 import { createServer } from "http";
 import { Server } from "socket.io";
 import Prato from "./models/Prato";
+import Pedido from "./models/Pedido";
 import imagesController from "./controllers/imagesController";
+import pedidosController from "./controllers/pedidosController";
+import Funcionario from "./models/Funcionario";
 
 //env variables
 const { PORT, MONGO_URI } = process.env;
@@ -37,25 +39,32 @@ app.use(cors());
 //rotas
 app.use("/clientes", clienteController);
 app.use("/funcionarios", funcionarioController);
-app.use("/mensagens", mensagemController);
 app.use("/pratos", pratoController);
 app.use("/images", imagesController);
+app.use("/pedidos", pedidosController);
 
 app.get("/", (req, res) => {
-  io.emit("updatePratos", "Luqueta da galereta");
   res.send("i am alive");
 });
 
 io.on("connection", socket => {
-  socket.on("chat message", msg => {
-    console.log(msg);
+  socket.on("mudarStatusPedido", async msg => {
+    const pedido = await Pedido.findByIdAndUpdate(
+      msg._id,
+      { status: msg.status },
+      { new: true }
+    );
+    console.log(pedido);
+    io.emit("atualizarPedidos", "uma atualização foi feita do pedido");
   });
 });
 
-//watch streams
-
+Pedido.watch().on("change", data => {});
 Prato.watch().on("change", data => {
   io.emit("updatePratos", "Um registro foi inserido/atualizado");
+});
+Funcionario.watch().on("change", data => {
+  io.emit("funcionario", "houve uma mudança em funcionários");
 });
 
 httpServer.listen(PORT, () => {

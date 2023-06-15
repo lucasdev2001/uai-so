@@ -50,6 +50,19 @@ export default () => {
     ));
   };
 
+  const handlePesquisa = (e: any) => {
+    const value = e.target.value;
+    const filteredArray = pratos.filter((e: any) =>
+      e.nome.toLowerCase().includes(value.toLowerCase())
+    );
+    if (value === "" || pratos.length === 0) {
+      axios(import.meta.env.VITE_HOST + "/pratos")
+        .then(res => setPratos(res.data))
+        .catch(error => console.log(error));
+    }
+    setPratos(filteredArray);
+  };
+
   return (
     <>
       <Navbar />
@@ -62,25 +75,13 @@ export default () => {
       </header>
       <br />
       <section className="container">
-        <input type="search" placeholder="pesquisar por prato" />
+        <input
+          type="search"
+          placeholder="pesquisar por prato"
+          onChange={handlePesquisa}
+        />
       </section>
 
-      <section className="container">
-        <figure>
-          <div className="filters">
-            <a href="#" role="button" className="outline">
-              Tradicionais
-            </a>
-            <a href="#" role="button" className="outline">
-              Lanches
-            </a>
-
-            <a href="#" role="button" className="outline">
-              Sobremesas
-            </a>
-          </div>
-        </figure>
-      </section>
       <section className="container">
         <ListaCardapio cardapio={pratos} />
       </section>

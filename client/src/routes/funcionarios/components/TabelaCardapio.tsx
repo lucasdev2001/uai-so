@@ -22,7 +22,7 @@ export default (props: {
               <tr key={index}>
                 <td>
                   <a href="#" onClick={props.clickVisualizar}>
-                    <i className="bi bi-eye" />
+                    <i className="bi bi-eye" id={e._id} />
                   </a>
                 </td>
                 <td>{e.nome}</td>

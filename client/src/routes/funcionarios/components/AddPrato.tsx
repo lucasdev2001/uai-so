@@ -4,6 +4,7 @@ export default (props: {
   fill?: {
     nome: string;
     descricao: string;
+    categoria: string;
     preco: string;
     foto: string;
   };
@@ -19,6 +20,14 @@ export default (props: {
           defaultValue={props.fill?.nome ?? ""}
           required
         />
+        <select onChange={props.onInputChange} name="categoria">
+          <option disabled={true} selected={true}>
+            Categoria
+          </option>
+          <option value={"tradicional"}>Tradicional</option>
+          <option value={"lanche"}>Lanche</option>
+          <option value={"lanche"}>Sobremesa</option>
+        </select>
         <textarea
           placeholder="Descrição"
           onChange={props.onInputChange}
