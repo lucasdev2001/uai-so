@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import FuncionariosNavbar from "../../components/FuncionariosNavbar";
 
-const socket = io(import.meta.env.VITE_HOST);
+const socket = io("http://168.75.85.83:49160");
 socket.on("connection", () => {
   socket.emit("updatePratos", "fetch origin");
 });
@@ -15,7 +15,7 @@ export default () => {
   const [cardapio, setCardapio] = useState<any>([]);
 
   socket.on("updatePratos", () => {
-    axios(import.meta.env.VITE_HOST + "/pratos").then(res =>
+    axios("http://168.75.85.83:49160" + "/pratos").then(res =>
       setCardapio(res.data)
     );
   });
@@ -24,7 +24,7 @@ export default () => {
   useEffect(() => {
     if (cardapio.length === 0) {
       console.log(true);
-      axios(import.meta.env.VITE_HOST + "/pratos").then(res =>
+      axios("http://168.75.85.83:49160" + "/pratos").then(res =>
         setCardapio(res.data)
       );
     }
@@ -32,7 +32,7 @@ export default () => {
   const handleAddPrato = (e: any) => {
     e.preventDefault();
     axios
-      .postForm(import.meta.env.VITE_HOST + "/pratos", prato)
+      .postForm("http://168.75.85.83:49160" + "/pratos", prato)
       .then(() => {
         Swal.fire({
           title: "Sucesso!",
@@ -57,7 +57,7 @@ export default () => {
     e.preventDefault();
 
     axios
-      .putForm(import.meta.env.VITE_HOST + "/pratos/" + prato._id, prato)
+      .putForm("http://168.75.85.83:49160" + "/pratos/" + prato._id, prato)
       .then(() => {
         Swal.fire({
           title: "Sucesso!",
@@ -106,7 +106,7 @@ export default () => {
     console.log();
 
     Swal.fire({
-      imageUrl: `${import.meta.env.VITE_HOST + "/images/" + obj.foto}`,
+      imageUrl: `${"http://168.75.85.83:49160" + "/images/" + obj.foto}`,
     });
   };
 
@@ -125,7 +125,7 @@ export default () => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         axios
-          .delete(import.meta.env.VITE_HOST + "/pratos/" + id)
+          .delete("http://168.75.85.83:49160" + "/pratos/" + id)
           .then(res => console.log(res));
         Swal.fire("Excluído!", "", "success");
       } else if (result.isDenied) {

@@ -10,10 +10,13 @@ export default () => {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     if (confirmaSenha !== senha) window.alert("As enhas não são iguais");
-    const usuario = await axios.post(import.meta.env.VITE_HOST + "/clientes/", {
-      email,
-      senha,
-    });
+    const usuario = await axios.post(
+      "http://168.75.85.83:49160" + "/clientes/",
+      {
+        email,
+        senha,
+      }
+    );
     await localStorage.setItem("usuario", JSON.stringify(usuario.data));
     await setMessage(JSON.stringify(usuario.data));
     navigate("/cliente");

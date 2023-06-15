@@ -11,7 +11,7 @@ export default (props: {
       <div className="food-card">
         <div className="food-card-image">
           <img
-            src={import.meta.env.VITE_HOST + "/images/" + props.foto}
+            src={"http://168.75.85.83:49160" + "/images/" + props.foto}
             style={{ borderRadius: "5px" }}
           />
         </div>

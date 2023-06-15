@@ -5,10 +5,10 @@ import Swal from "sweetalert2";
 import FuncionariosNavbar from "../../components/FuncionariosNavbar";
 
 export default () => {
-  const socket = io(import.meta.env.VITE_HOST);
+  const socket = io("http://168.75.85.83:49160");
 
   socket.on("funcionario", () => {
-    axios(import.meta.env.VITE_HOST + "/funcionarios").then(res => {
+    axios("http://168.75.85.83:49160" + "/funcionarios").then(res => {
       setFuncionarios(res.data);
       console.log(res.data);
     });
@@ -18,7 +18,7 @@ export default () => {
   const [funcionarios, setFuncionarios] = useState<any>([]);
   useEffect(() => {
     if (funcionarios.length === 0) {
-      axios(import.meta.env.VITE_HOST + "/funcionarios").then(res => {
+      axios("http://168.75.85.83:49160" + "/funcionarios").then(res => {
         setFuncionarios(res.data);
         console.log(res.data);
       });
@@ -36,7 +36,7 @@ export default () => {
   const handleFormSubmit = (e: any) => {
     e.preventDefault();
     axios
-      .post(import.meta.env.VITE_HOST + "/funcionarios", funcionario)
+      .post("http://168.75.85.83:49160" + "/funcionarios", funcionario)
       .then(() =>
         Swal.fire({
           icon: "success",
@@ -64,7 +64,7 @@ export default () => {
     e.preventDefault();
     axios
       .put(
-        import.meta.env.VITE_HOST + "/funcionarios/" + funcionario._id,
+        "http://168.75.85.83:49160" + "/funcionarios/" + funcionario._id,
         funcionario
       )
       .then(() =>
@@ -161,7 +161,7 @@ export default () => {
                             if (result.isConfirmed) {
                               axios
                                 .delete(
-                                  import.meta.env.VITE_HOST +
+                                  "http://168.75.85.83:49160" +
                                     "/funcionarios/" +
                                     e.target.id
                                 )

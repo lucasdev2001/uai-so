@@ -9,7 +9,7 @@ export default () => {
   const handleLogin = async (e: any) => {
     e.preventDefault();
     const usuario = await axios.post(
-      import.meta.env.VITE_HOST + "/clientes/login",
+      "http://168.75.85.83:49160" + "/clientes/login",
       {
         email,
         senha,

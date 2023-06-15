@@ -5,14 +5,14 @@ import Navbar from "../../components/Navbar";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const socket = io(import.meta.env.VITE_HOST);
+const socket = io("http://168.75.85.83:49160");
 socket.on("connection", () => {
   socket.emit("updatePratos", "fetch origin");
 });
 export default () => {
   socket.on("updatePratos", async () => {
     setPratos(
-      await axios(import.meta.env.VITE_HOST + "/pratos").then(res => res.data)
+      await axios("http://168.75.85.83:49160" + "/pratos").then(res => res.data)
     );
   });
 
@@ -25,7 +25,7 @@ export default () => {
       setUsuario(JSON.parse(usuarioLocalStorage));
     }
     axios
-      .get(import.meta.env.VITE_HOST + "/pratos")
+      .get("http://168.75.85.83:49160" + "/pratos")
       .then(response => setPratos(response.data));
   }, []);
 
@@ -56,7 +56,7 @@ export default () => {
       e.nome.toLowerCase().includes(value.toLowerCase())
     );
     if (value === "" || pratos.length === 0) {
-      axios(import.meta.env.VITE_HOST + "/pratos")
+      axios("http://168.75.85.83:49160" + "/pratos")
         .then(res => setPratos(res.data))
         .catch(error => console.log(error));
     }

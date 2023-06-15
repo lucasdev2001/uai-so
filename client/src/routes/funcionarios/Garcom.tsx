@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { io } from "socket.io-client";
 import FuncionariosNavbar from "../../components/FuncionariosNavbar";
-const socket = io(import.meta.env.VITE_HOST);
+const socket = io("http://168.75.85.83:49160");
 
 export default () => {
   const [nome, setNome] = useState("");
@@ -14,7 +14,7 @@ export default () => {
   });
   const [pratosEscolhidos, setPratosEscolhidos] = useState<any>([]);
   useEffect(() => {
-    axios(import.meta.env.VITE_HOST + "/pratos")
+    axios("http://168.75.85.83:49160" + "/pratos")
       .then(res => setCardapio(res.data))
       .catch(error => console.log(error));
   }, []);
@@ -51,7 +51,7 @@ export default () => {
       e.nome.toLowerCase().includes(value)
     );
     if (value === "" || cardapio.length === 0) {
-      axios(import.meta.env.VITE_HOST + "/pratos")
+      axios("http://168.75.85.83:49160" + "/pratos")
         .then(res => setCardapio(res.data))
         .catch(error => console.log(error));
     }
@@ -61,7 +61,7 @@ export default () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     axios
-      .post(import.meta.env.VITE_HOST + "/pedidos", {
+      .post("http://168.75.85.83:49160" + "/pedidos", {
         senhaPedido: Math.floor(Math.random() * 16777215).toString(16),
         pratos: pratosEscolhidos,
         nomeCliente: nome,
